@@ -114,11 +114,11 @@
   "TCELL": {
     "currentPrice": 101.6,
     "priceAsOfDate": "2026-09-22",
-    "support1": null,
-    "support2": null,
-    "resistance1": 129.6,
-    "resistance2": 138,
-    "sourceUrl": "https://www.hisse.net/borsa/hisseler/tcell-turkcell"
+    "support1": 101.0,
+    "support2": 100.0,
+    "resistance1": 103.0,
+    "resistance2": 104.0,
+    "sourceUrl": "https://finans.mynet.com/haber/detay/borsa/turkcell-tcell-15-eylul-sali-2026-gunluk-teknik-analiz/574558/"
   },
   "EKGYO": {
     "currentPrice": 20.06,
@@ -186,11 +186,11 @@
   "TOASO": {
     "currentPrice": 290.5,
     "priceAsOfDate": "2026-09-22",
-    "support1": null,
-    "support2": null,
-    "resistance1": null,
+    "support1": 275.0,
+    "support2": 266.0,
+    "resistance1": 296.0,
     "resistance2": null,
-    "sourceUrl": "https://www.borsametre.com.tr/piyasalar/toasoda-hacimli-yukselis-direnc-ve-destek-noktalari-138200h"
+    "sourceUrl": "https://finans.mynet.com/haber/detay/borsa/tofas-oto-fab-toaso-21-eylul-pazartesi-2026-gunluk-teknik-analiz/575815/"
   },
   "ARCLK": {
     "currentPrice": 115.2,
@@ -213,8 +213,8 @@
   "ANHYT": {
     "currentPrice": 103,
     "priceAsOfDate": "2026-09-22",
-    "support1": null,
-    "support2": null,
+    "support1": 92.5,
+    "support2": 91.6,
     "resistance1": 112.73,
     "resistance2": 122.93,
     "sourceUrl": "https://tr.tradingview.com/symbols/BIST-ANHYT/technicals/"
@@ -231,10 +231,10 @@
   "CIMSA": {
     "currentPrice": 42.94,
     "priceAsOfDate": "2026-09-22",
-    "support1": null,
-    "support2": null,
-    "resistance1": null,
-    "resistance2": null,
+    "support1": 39.33,
+    "support2": 37.67,
+    "resistance1": 43.33,
+    "resistance2": 45.67,
     "sourceUrl": "https://finans.mynet.com/haber/detay/borsa/cimsa-cimsa-21-eylul-pazartesi-2026-gunluk-teknik-analiz/575866/"
   },
   "THYAO": {
@@ -256,7 +256,7 @@
   "ENKAI": { "currentPrice": 87.2, "priceAsOfDate": "2026-09-22", "support1": null, "support2": null, "resistance1": null, "resistance2": null, "sourceUrl": null },
   "EREGL": { "currentPrice": 37.84, "priceAsOfDate": "2026-09-22", "support1": null, "support2": null, "resistance1": null, "resistance2": null, "sourceUrl": null },
   "ISMEN": { "currentPrice": 33.9, "priceAsOfDate": "2026-09-22", "support1": null, "support2": null, "resistance1": null, "resistance2": null, "sourceUrl": null },
-  "MAVI": { "currentPrice": 38.42, "priceAsOfDate": "2026-09-22", "support1": null, "support2": null, "resistance1": null, "resistance2": null, "sourceUrl": null },
+  "MAVI": { "currentPrice": 38.42, "priceAsOfDate": "2026-09-22", "support1": 37.58, "support2": null, "resistance1": 40.10, "resistance2": 40.70, "sourceUrl": "https://atayatirim.com.tr/hisse/mavi" },
   "SARKY": { "currentPrice": 22.24, "priceAsOfDate": "2026-09-22", "support1": null, "support2": null, "resistance1": null, "resistance2": null, "sourceUrl": null },
   "TABGD": { "currentPrice": 225.2, "priceAsOfDate": "2026-09-22", "support1": null, "support2": null, "resistance1": null, "resistance2": null, "sourceUrl": null },
   "TURSG": { "currentPrice": 6.16, "priceAsOfDate": "2026-09-22", "support1": null, "support2": null, "resistance1": null, "resistance2": null, "sourceUrl": null }
