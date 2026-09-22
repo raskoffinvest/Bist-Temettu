@@ -33,14 +33,35 @@ içine gömülüdür, ayrı bir `fetch` gerektirmez.)
 - **Uyarılar:** Toplam ağırlık %100 değilse, hisse/sektör sayısı önerilen
   aralığın dışındaysa, bir sektör ağırlığı %35'i aşıyorsa veya bir hisse
   kriterlere uymuyorsa otomatik uyarı gösterir.
+- **Güncel fiyat + destek/direnç:** Her hisse için web aramasıyla çekilmiş
+  güncel fiyat ve kısa vadeli destek/direnç seviyeleri (tarih ve kaynak linki
+  ile birlikte gösterilir — linke tıklayıp doğrulayabilirsiniz).
+- **Jeopolitik/manipülasyon risk notları:** Her hissenin sembolü yanındaki ⓘ
+  ikonu, sektör/ortaklık yapısına dayalı genel risk değerlendirmesi gösterir.
+- **Alım fiyatı uyarısı:** Portföyünüzdeki her hisse için hedef alım fiyatı ve
+  güncel fiyatı elle girin; güncel fiyat hedefe indiğinde panelde "ALIM
+  SİNYALİ" rozeti belirir (push/email bildirimi değildir, panel açıkken
+  görünür).
 
 ## Veri hakkında önemli not
 
-`js/data.js` içindeki hisse verileri (temettü verimi, payout oranı,
-borç/özkaynak, temettü geçmişi yılı) **örnek/yer tutucu** değerlerdir. Gerçek
-portföy kararları vermeden önce bu değerleri güncel finansal tablolar, KAP
-açıklamaları ve borsa verileriyle güncelleyin. Bu araç yatırım tavsiyesi
-değildir.
+`js/data.js` içindeki temettü verimi/payout/borç-özkaynak/F-K/PD-DD değerleri
+**örnek/yer tutucu**dur. `currentPrice`/`support`/`resistance` alanları web
+aramasıyla çekilmiş **anlık görüntülerdir** (`priceAsOfDate` tarihli, canlı
+borsa akışı değildir) — bazı kaynaklarda güncel fiyatla tutarsız görünen
+destek/direnç seviyeleri (ör. TOASO, CIMSA) bilinçli olarak boş bırakıldı.
+`geoRisk`/`manipRisk` notları genel, yapısal değerlendirmelerdir (halka
+açıklık oranı, ortaklık yapısı gibi), belirli bir olay/manipülasyon iddiası
+içermez. Gerçek portföy kararları vermeden önce bu değerleri güncel finansal
+tablolar, KAP açıklamaları ve profesyonel danışmanlıkla teyit edin. Bu araç
+yatırım tavsiyesi değildir.
+
+**IBKR ile ilgili not:** Bu panel için Interactive Brokers (IBKR) bağlantısı
+test edildi; bu hesapta Borsa İstanbul'da işlem gören hisselere doğrudan
+erişim bulunmuyor (sadece tahvil/ADR sonuçları dönüyor). Bu yüzden gerçek
+zamanlı BIST verisi veya IBKR üzerinden fiyat alarmı kurulamıyor — panel
+web aramasıyla çekilen anlık görüntülere ve manuel girilen hedef fiyatlara
+dayanıyor.
 
 ## Stratejinin dayandığı kriterler
 

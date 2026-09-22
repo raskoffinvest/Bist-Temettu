@@ -1,6 +1,6 @@
 const LS_KEY = "bist-temettu-portfoy-v1";
 
-/** { SYMBOL: weightPct } */
+/** { SYMBOL: { weight: number, targetPrice: number|null, currentPrice: number|null } } */
 let portfolio = loadPortfolio();
 let sortKey = "symbol";
 let sortDir = 1;
@@ -10,7 +10,14 @@ let sectorChart = null;
 function loadPortfolio() {
   try {
     const raw = localStorage.getItem(LS_KEY);
-    return raw ? JSON.parse(raw) : {};
+    const parsed = raw ? JSON.parse(raw) : {};
+    // Eski format (sadece ağırlık sayısı) ile geriye dönük uyumluluk
+    Object.keys(parsed).forEach((sym) => {
+      if (typeof parsed[sym] === "number") {
+        parsed[sym] = { weight: parsed[sym], targetPrice: null, currentPrice: null };
+      }
+    });
+    return parsed;
   } catch (e) {
     return {};
   }
@@ -53,6 +60,17 @@ function formatPct(n) {
   return `${n.toFixed(1)}%`;
 }
 
+function formatPrice(n) {
+  return n === null || n === undefined ? "–" : `${n.toFixed(2)} TL`;
+}
+
+function riskTooltip(s) {
+  const parts = [];
+  if (s.geoRisk) parts.push(`Jeopolitik: ${s.geoRisk}`);
+  if (s.manipRisk) parts.push(`Manipülasyon: ${s.manipRisk}`);
+  return parts.join("\n\n");
+}
+
 function renderCriteria() {
   const el = document.getElementById("criteria-list");
   el.innerHTML = `
@@ -65,6 +83,7 @@ function renderCriteria() {
     <li>Savunma karakterli, döngüsel olmayan sektörler (gıda, telekom, sigorta gibi) tercih edilebilir; döngüsel sektörlerde pay sınırlı tutulmalı</li>
     <li>Enflasyon muhasebesi (TFRS/UMS 29) raporlanan kârı ve temettü kapasitesini etkiliyor — şirket bazında enflasyon düzeltmeli tabloları kontrol edin</li>
     <li>TL bazlı temettünün kur riski var — nominal ve reel/dolar bazlı getiri farkına dikkat edin</li>
+    <li>Jeopolitik ve manipülasyon riski hisse bazında değişir — havuz tablosundaki ⓘ ikonuna bakın</li>
     <li>Portföyde <strong>${CRITERIA.minStocks}-${CRITERIA.maxStocks}</strong> hisse, en az <strong>${CRITERIA.minSectors}</strong> farklı sektör</li>
     <li>Tek sektör ağırlığı <strong>%${CRITERIA.maxSectorWeightPct}</strong>'i aşmamalı</li>
     <li>Stopaj: doğrudan hisse yerine hisse ağırlıklı fonlar (örn. PHE/KHA/PBR) bazı yatırımcılar için %0 stopaj avantajı sunabilir</li>
@@ -94,10 +113,20 @@ function renderStockTable() {
   const rows = sortedFilteredStocks().map((s) => {
     const status = stockStatus(s);
     const inPortfolio = portfolio[s.symbol] !== undefined;
+    const dateLine = s.sourceUrl
+      ? `<a class="price-date" href="${s.sourceUrl}" target="_blank" rel="noopener">${s.priceAsOfDate || "kaynak"}</a>`
+      : `<div class="price-date">${s.priceAsOfDate || ""}</div>`;
+    const priceLine = s.currentPrice ? `${formatPrice(s.currentPrice)}${dateLine}` : "–";
+    const srLine = s.support1 || s.resistance1
+      ? `D: ${s.support1 ?? "–"} / R: ${s.resistance1 ?? "–"}`
+      : "–";
     return `
       <tr class="status-${status.level}">
         <td class="symbol-cell">
-          <div class="symbol">${s.symbol}</div>
+          <div class="symbol">
+            ${s.symbol}
+            <span class="info-icon" title="${riskTooltip(s)}">ⓘ</span>
+          </div>
           <div class="stock-name">${s.name}</div>
         </td>
         <td>${s.sector}</td>
@@ -108,6 +137,8 @@ function renderStockTable() {
         <td>${s.pbRatio}</td>
         <td><span class="badge badge-${s.cyclical ? "cyclical" : "defensive"}">${s.cyclical ? "Döngüsel" : "Savunma"}</span></td>
         <td>${s.dividendYears} yıl</td>
+        <td>${priceLine}</td>
+        <td>${srLine}</td>
         <td><span class="badge badge-${status.level}" title="${status.reasons.join("; ") || "Kriterlere uygun"}">${status.level === "ok" ? "Uygun" : status.level === "warn" ? "Dikkat" : "Riskli"}</span></td>
         <td>
           <button class="btn-add ${inPortfolio ? "btn-remove" : ""}" data-symbol="${s.symbol}">
@@ -125,7 +156,8 @@ function renderStockTable() {
       if (portfolio[sym] !== undefined) {
         delete portfolio[sym];
       } else {
-        portfolio[sym] = 10;
+        const stock = STOCKS.find((s) => s.symbol === sym);
+        portfolio[sym] = { weight: 10, targetPrice: null, currentPrice: stock ? stock.currentPrice : null };
       }
       savePortfolio();
       renderAll();
@@ -143,13 +175,26 @@ function renderPortfolio() {
     container.innerHTML = symbols
       .map((sym) => {
         const stock = STOCKS.find((s) => s.symbol === sym);
+        const p = portfolio[sym];
+        const hasSignal = p.targetPrice != null && p.currentPrice != null && p.currentPrice <= p.targetPrice;
         return `
-          <div class="portfolio-row">
-            <span class="symbol">${sym}</span>
-            <span class="portfolio-sector">${stock ? stock.sector : ""}</span>
-            <input type="number" min="0" max="100" step="0.5" class="weight-input" data-symbol="${sym}" value="${portfolio[sym]}" />
-            <span>%</span>
-            <button class="btn-remove-row" data-symbol="${sym}">✕</button>
+          <div class="portfolio-row ${hasSignal ? "signal-row" : ""}" data-row-symbol="${sym}">
+            <div class="portfolio-row-main">
+              <span class="symbol">${sym}</span>
+              <span class="portfolio-sector">${stock ? stock.sector : ""}</span>
+              <input type="number" min="0" max="100" step="0.5" class="weight-input" data-symbol="${sym}" data-field="weight" value="${p.weight}" title="Portföy ağırlığı (%)" />
+              <span>%</span>
+              <button class="btn-remove-row" data-symbol="${sym}">✕</button>
+            </div>
+            <div class="portfolio-row-price">
+              <label>Hedef alım fiyatı
+                <input type="number" min="0" step="0.01" class="price-input" data-symbol="${sym}" data-field="targetPrice" value="${p.targetPrice ?? ""}" placeholder="TL" />
+              </label>
+              <label>Güncel fiyat
+                <input type="number" min="0" step="0.01" class="price-input" data-symbol="${sym}" data-field="currentPrice" value="${p.currentPrice ?? ""}" placeholder="TL" />
+              </label>
+              <span class="signal-badge-slot">${hasSignal ? `<span class="badge badge-ok signal-badge">ALIM SİNYALİ</span>` : ""}</span>
+            </div>
           </div>
         `;
       })
@@ -159,11 +204,22 @@ function renderPortfolio() {
       inp.addEventListener("input", () => {
         const sym = inp.dataset.symbol;
         const val = parseFloat(inp.value);
-        portfolio[sym] = isNaN(val) ? 0 : val;
+        portfolio[sym].weight = isNaN(val) ? 0 : val;
         savePortfolio();
         renderSummary();
         renderSectorChart();
         renderWarnings();
+      });
+    });
+    container.querySelectorAll(".price-input").forEach((inp) => {
+      inp.addEventListener("input", () => {
+        const sym = inp.dataset.symbol;
+        const field = inp.dataset.field;
+        const val = parseFloat(inp.value);
+        portfolio[sym][field] = inp.value === "" || isNaN(val) ? null : val;
+        savePortfolio();
+        updateSignalDisplay(sym);
+        renderSummary();
       });
     });
     container.querySelectorAll(".btn-remove-row").forEach((btn) => {
@@ -175,15 +231,25 @@ function renderPortfolio() {
     });
   }
 
-  const totalWeight = Object.values(portfolio).reduce((a, b) => a + b, 0);
+  const totalWeight = Object.values(portfolio).reduce((a, p) => a + p.weight, 0);
   const totalEl = document.getElementById("total-weight");
   totalEl.textContent = `Toplam ağırlık: ${totalWeight.toFixed(1)}%`;
   totalEl.className = Math.abs(totalWeight - 100) < 0.01 ? "total-ok" : "total-warn";
 }
 
+function updateSignalDisplay(sym) {
+  const p = portfolio[sym];
+  const row = document.querySelector(`.portfolio-row[data-row-symbol="${sym}"]`);
+  if (!row || !p) return;
+  const hasSignal = p.targetPrice != null && p.currentPrice != null && p.currentPrice <= p.targetPrice;
+  row.classList.toggle("signal-row", hasSignal);
+  const slot = row.querySelector(".signal-badge-slot");
+  slot.innerHTML = hasSignal ? `<span class="badge badge-ok signal-badge">ALIM SİNYALİ</span>` : "";
+}
+
 function portfolioStocks() {
   return Object.entries(portfolio)
-    .map(([sym, weight]) => ({ stock: STOCKS.find((s) => s.symbol === sym), weight }))
+    .map(([sym, p]) => ({ stock: STOCKS.find((s) => s.symbol === sym), weight: p.weight }))
     .filter((x) => x.stock);
 }
 
@@ -195,6 +261,9 @@ function renderSummary() {
   const weightedPayout = items.reduce((a, x) => a + x.stock.payoutPct * x.weight, 0) / totalWeight;
   const weightedDebt = items.reduce((a, x) => a + x.stock.debtToEquity * x.weight, 0) / totalWeight;
   const sectorCount = new Set(items.map((x) => x.stock.sector)).size;
+  const signalCount = Object.values(portfolio).filter(
+    (p) => p.targetPrice != null && p.currentPrice != null && p.currentPrice <= p.targetPrice
+  ).length;
 
   document.getElementById("summary-cards").innerHTML = `
     <div class="card">
@@ -216,6 +285,10 @@ function renderSummary() {
     <div class="card">
       <div class="card-label">Ağırlıklı Borç/Özkaynak</div>
       <div class="card-value">${items.length ? weightedDebt.toFixed(2) : "–"}</div>
+    </div>
+    <div class="card ${signalCount > 0 ? "card-signal" : ""}">
+      <div class="card-label">Alım Sinyali</div>
+      <div class="card-value">${signalCount}</div>
     </div>
   `;
 }
