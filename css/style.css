@@ -350,57 +350,6 @@ tr.status-risk td.symbol-cell .symbol {
   margin: 0 auto;
 }
 
-#apply-ai-portfolio {
-  padding: 6px 14px;
-  border-radius: 6px;
-  border: 1px solid var(--accent);
-  background: var(--accent);
-  color: #fff;
-  cursor: pointer;
-  font-size: 0.85rem;
-}
-
-.ai-summary {
-  color: var(--muted);
-  line-height: 1.6;
-  margin: 4px 0 16px;
-}
-
-.ai-portfolio-list {
-  display: grid;
-  gap: 10px;
-}
-
-.ai-stock-row {
-  background: var(--accent-light);
-  border-radius: 10px;
-  padding: 12px 14px;
-}
-
-.ai-stock-head {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 6px;
-}
-
-.ai-stock-head .symbol {
-  font-weight: 700;
-}
-
-.ai-weight {
-  margin-left: auto;
-  font-weight: 700;
-  color: var(--accent);
-}
-
-.ai-reasoning {
-  margin: 0;
-  font-size: 0.85rem;
-  color: var(--text);
-  line-height: 1.5;
-}
-
 .warning-list {
   margin: 0;
   padding-left: 20px;

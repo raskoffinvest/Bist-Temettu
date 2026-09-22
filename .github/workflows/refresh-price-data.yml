@@ -1,4 +1,4 @@
-name: Fiyat ve AI Portföy Önerisini Yenile
+name: Fiyat/Destek-Direnç Verisini Yenile
 
 on:
   schedule:
@@ -34,15 +34,10 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: npm run refresh-data
 
-      - name: AI portföy önerisini yenile
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: npm run generate-ai-portfolio
-
       - name: Değişiklik var mı kontrol et
         id: diff
         run: |
-          if git diff --quiet -- js/price-data.json js/ai-portfolio.json; then
+          if git diff --quiet -- js/price-data.json; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
@@ -53,8 +48,8 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add js/price-data.json js/ai-portfolio.json
-          git commit -m "Fiyat ve AI portföy önerisini otomatik güncelle"
+          git add js/price-data.json
+          git commit -m "Fiyat/destek-direnç verisini otomatik güncelle"
 
           # Bu branch'e workflow çalışırken elle/başka bir commit gelmiş olabilir;
           # push reddedilirse rebase edip tekrar dene (en fazla 5 kez).

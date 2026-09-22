@@ -5,11 +5,9 @@
   "description": "BIST Temettü Portföy Paneli — statik dashboard + fiyat/destek-direnç verisini yenileyen script",
   "scripts": {
     "refresh-data": "node scripts/refresh-price-data.mjs",
-    "generate-ai-portfolio": "node scripts/generate-ai-portfolio.mjs",
     "serve": "python3 -m http.server 8000"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.127.0",
-    "zod": "^4.6.5"
+    "@anthropic-ai/sdk": "^0.127.0"
   }
 }
