@@ -189,9 +189,24 @@ a.price-date:hover {
 .badge-risk { background: var(--risk); }
 .badge-cyclical { background: var(--muted); }
 .badge-defensive { background: var(--accent); }
+.badge-unverified {
+  background: repeating-linear-gradient(
+    45deg,
+    var(--muted),
+    var(--muted) 4px,
+    var(--panel) 4px,
+    var(--panel) 8px
+  );
+  color: var(--text);
+  border: 1px solid var(--muted);
+}
 
 tr.status-risk td.symbol-cell .symbol {
   color: var(--risk);
+}
+
+tr.status-unverified {
+  opacity: 0.72;
 }
 
 .btn-add {

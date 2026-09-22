@@ -36,6 +36,9 @@ function isNum(v) {
 }
 
 function stockStatus(stock) {
+  if (!stock.verified) {
+    return { level: "unverified", reasons: ["Temel veriler (verim/payout/borç-özkaynak/F-K/PD-DD) henüz web araştırmasıyla doğrulanmadı — örnek/yer tutucu olabilir. Kriterlere uygun görünse bile 'Uygun' sayılmaz."] };
+  }
   const reasons = [];
   if (isNum(stock.yieldPct) && (stock.yieldPct < CRITERIA.yieldMin || stock.yieldPct > CRITERIA.yieldMax)) {
     reasons.push(`Verim aralık dışı (${stock.yieldPct}%)`);
@@ -58,6 +61,13 @@ function stockStatus(stock) {
   if (reasons.length === 0) return { level: "ok", reasons };
   if (reasons.length <= 1) return { level: "warn", reasons };
   return { level: "risk", reasons };
+}
+
+function statusLabel(level) {
+  if (level === "ok") return "Uygun";
+  if (level === "warn") return "Dikkat";
+  if (level === "unverified") return "Doğrulanmamış";
+  return "Riskli";
 }
 
 function formatPct(n) {
@@ -95,6 +105,7 @@ function renderCriteria() {
     <li>Portföyde <strong>${CRITERIA.minStocks}-${CRITERIA.maxStocks}</strong> hisse, en az <strong>${CRITERIA.minSectors}</strong> farklı sektör</li>
     <li>Tek sektör ağırlığı <strong>%${CRITERIA.maxSectorWeightPct}</strong>'i aşmamalı</li>
     <li>Stopaj: doğrudan hisse yerine hisse ağırlıklı fonlar (örn. PHE/KHA/PBR) bazı yatırımcılar için %0 stopaj avantajı sunabilir</li>
+    <li><strong>"Doğrulanmamış" rozeti:</strong> o hissenin verim/payout/borç-özkaynak/F-K/PD-DD verileri henüz web araştırmasıyla teyit edilmedi, örnek/yer tutucu olabilir — bu hisseler "Uygun" sayılmaz, hangi hisselerin gerçek veriyle doğrulandığını görmek için ⓘ notlarına bakın</li>
   `;
 }
 
@@ -147,7 +158,7 @@ function renderStockTable() {
         <td>${isNum(s.dividendYears) ? `${s.dividendYears} yıl` : "–"}</td>
         <td>${priceLine}</td>
         <td>${srLine}</td>
-        <td><span class="badge badge-${status.level}" title="${status.reasons.join("; ") || "Kriterlere uygun"}">${status.level === "ok" ? "Uygun" : status.level === "warn" ? "Dikkat" : "Riskli"}</span></td>
+        <td><span class="badge badge-${status.level}" title="${status.reasons.join("; ") || "Kriterlere uygun"}">${statusLabel(status.level)}</span></td>
         <td>
           <button class="btn-add ${inPortfolio ? "btn-remove" : ""}" data-symbol="${s.symbol}">
             ${inPortfolio ? "Çıkar" : "Ekle"}
@@ -398,7 +409,7 @@ function renderWarnings() {
     });
     items.forEach((x) => {
       const status = stockStatus(x.stock);
-      if (status.level === "risk") {
+      if (status.level === "risk" || status.level === "unverified") {
         warnings.push(`${x.stock.symbol}: ${status.reasons.join("; ")}`);
       }
     });
