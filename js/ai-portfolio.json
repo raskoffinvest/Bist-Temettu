@@ -1,0 +1,18 @@
+{
+  "generatedAt": "2026-09-22T11:20:00Z",
+  "generatedBy": "claude-opus-5",
+  "portfolioReasoning": "11 hisse, 8 farklı sektöre dağıtıldı (Bankacılık, Holding×2, Enerji/Petrokimya, Telekom, GYO, Sanayi/Otomotiv, Sigorta×2, Çimento×2) — kriterlerin istediği 8-15 hisse ve en az 3 sektör şartını rahatça karşılıyor. Sadece tarama kriterlerinin tamamını geçen ('Uygun' statülü) hisseler seçildi; 'Dikkat' ve 'Riskli' işaretli hisseler (kısa temettü geçmişi, value trap sinyali, tutarsız temettü politikası, yüksek borç/özkaynak veya hedef bandın dışında verim gibi nedenlerle) elenerek dışarıda bırakıldı. Eşit ağırlıklandırma (~%9.09) kullanıldı; hiçbir sektör %35 üst sınırını aşmıyor (en yüksek sektör ağırlığı Holding/Sigorta/Çimento için %18.2). Bu bir başlangıç noktasıdır — kendi risk toleransınıza göre ağırlıkları değiştirebilir, hisse ekleyip çıkarabilirsiniz.",
+  "stocks": [
+    { "symbol": "ISCTR", "weightPct": 9.09, "reasoning": "Temettü verimi %6.0 ile %4-7 bandının ortasında, payout oranı %25 ile düşük (büyüme/kriz payı bırakıyor). Borç/özkaynak 0.9 bankacılık sektörü için normal, 6 yıllık temettü geçmişi 5 yıllık eşiği geçiyor." },
+    { "symbol": "KCHOL", "weightPct": 9.09, "reasoning": "Temettü verimi %4.2, payout %35, borç/özkaynak 0.6 — hepsi sağlıklı aralıkta. 10 yıllık kesintisiz temettü geçmişi ve enerji/otomotiv/dayanıklı tüketim çeşitliliği portföye istikrar katıyor." },
+    { "symbol": "SAHOL", "weightPct": 9.09, "reasoning": "Temettü verimi %4.0, payout %30, borç/özkaynak 0.6 — KCHOL'a benzer sağlıklı bir profil. 10 yıllık temettü geçmişi ve bankacılık/enerji kollarıyla ek çeşitlendirme sağlıyor." },
+    { "symbol": "TUPRS", "weightPct": 9.09, "reasoning": "Temettü verimi %6.5 ile bandın üst sınırına yakın ama sağlıklı; payout %60 kabul edilebilir üst sınırda. 8 yıllık temettü geçmişi güçlü — portföydeki tek enerji/petrokimya temsilcisi, rafineri marjı döngüselliği nedeniyle ağırlığı diğerleriyle eşit tutuldu." },
+    { "symbol": "TCELL", "weightPct": 9.09, "reasoning": "Temettü verimi %5.0, payout %50, borç/özkaynak 0.7 — dengeli. 9 yıllık kesintisiz temettü geçmişi ve savunma karakterli (döngüsel olmayan) sektör yapısı portföye istikrar katıyor." },
+    { "symbol": "EKGYO", "weightPct": 9.09, "reasoning": "Temettü verimi %5.5, payout %45, borç/özkaynak 0.4 ile GYO sektöründe düşük kaldıraç. 6 yıllık temettü geçmişi kriteri karşılıyor; konut piyasası döngüselliği nedeniyle ağırlığı sınırlı tutuldu." },
+    { "symbol": "TOASO", "weightPct": 9.09, "reasoning": "Temettü verimi %4.0, payout %45, borç/özkaynak 0.6 — sağlıklı. 8 yıllık temettü geçmişi ve Stellantis ortaklığının kurumsal yönetim şeffaflığı nedeniyle seçildi." },
+    { "symbol": "AGESA", "weightPct": 9.09, "reasoning": "Temettü verimi %5.0, payout %50, borç/özkaynak 0.3 ile sektöründeki en düşük kaldıraçlardan biri. 5 yıllık temettü geçmişi kriterin tam sınırında; savunma karakterli sigorta sektörünü temsil ediyor." },
+    { "symbol": "ANHYT", "weightPct": 9.09, "reasoning": "Temettü verimi %4.5, payout %45, borç/özkaynak 0.3 — AGESA'ya benzer düşük risk profili. 6 yıllık temettü geçmişiyle sigorta sektöründeki ikinci pozisyon, İş Bankası/Anadolu Grubu ortaklık yapısının şeffaflığından destekleniyor." },
+    { "symbol": "AKCNS", "weightPct": 9.09, "reasoning": "Temettü verimi %5.5, payout %55, borç/özkaynak 0.5 — dengeli. 6 yıllık temettü geçmişi kriteri karşılıyor; Sabancı/Heidelberg ortaklığı kurumsal yönetimi destekliyor." },
+    { "symbol": "CIMSA", "weightPct": 9.09, "reasoning": "Temettü verimi %4.0, payout %40, borç/özkaynak 0.6 — sağlıklı. 5 yıllık temettü geçmişi kriterin tam sınırında; çimento sektöründeki ikinci pozisyon olarak AKCNS'i tamamlıyor." }
+  ]
+}

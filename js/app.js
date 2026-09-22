@@ -428,11 +428,76 @@ async function loadPriceData() {
   }
 }
 
+let aiPortfolio = null;
+
+async function loadAiPortfolio() {
+  try {
+    const res = await fetch("js/ai-portfolio.json");
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    aiPortfolio = await res.json();
+  } catch (e) {
+    aiPortfolio = null;
+    // js/ai-portfolio.json bulunamadı/okunamadı — bölüm gizli kalır.
+  }
+}
+
+function renderAiPortfolio() {
+  const section = document.getElementById("ai-portfolio-section");
+  if (!aiPortfolio || !Array.isArray(aiPortfolio.stocks) || aiPortfolio.stocks.length === 0) {
+    section.style.display = "none";
+    return;
+  }
+  section.style.display = "";
+
+  const dateStr = aiPortfolio.generatedAt ? new Date(aiPortfolio.generatedAt).toLocaleDateString("tr-TR") : "";
+  document.getElementById("ai-portfolio-meta").textContent = `${aiPortfolio.generatedBy || "AI"} tarafından ${dateStr} tarihinde, tarama kriterlerine göre otomatik oluşturuldu.`;
+  document.getElementById("ai-portfolio-summary").textContent = aiPortfolio.portfolioReasoning || "";
+
+  const list = document.getElementById("ai-portfolio-list");
+  list.innerHTML = aiPortfolio.stocks
+    .map((s) => {
+      const stock = STOCKS.find((st) => st.symbol === s.symbol);
+      return `
+        <div class="ai-stock-row">
+          <div class="ai-stock-head">
+            <span class="symbol">${s.symbol}</span>
+            <span class="portfolio-sector">${stock ? stock.sector : ""}</span>
+            <span class="ai-weight">%${s.weightPct.toFixed(1)}</span>
+          </div>
+          <p class="ai-reasoning">${s.reasoning}</p>
+        </div>
+      `;
+    })
+    .join("");
+}
+
+function applyAiPortfolio() {
+  if (!aiPortfolio || !Array.isArray(aiPortfolio.stocks)) return;
+  if (!confirm("Mevcut portföyünüzdeki hisseler ve ağırlıklar, AI önerisiyle değiştirilecek. Devam edilsin mi?")) {
+    return;
+  }
+  const newPortfolio = {};
+  aiPortfolio.stocks.forEach((s) => {
+    const stock = STOCKS.find((st) => st.symbol === s.symbol);
+    newPortfolio[s.symbol] = {
+      weight: s.weightPct,
+      targetPrice: null,
+      currentPrice: stock ? stock.currentPrice ?? null : null,
+    };
+  });
+  portfolio = newPortfolio;
+  savePortfolio();
+  renderAll();
+  document.getElementById("portfolio-section").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
   renderCriteria();
   renderSectorFilterOptions();
   await loadPriceData();
+  await loadAiPortfolio();
   renderAll();
+  renderAiPortfolio();
 
   document.getElementById("sector-filter").addEventListener("change", (e) => {
     sectorFilter = e.target.value;
@@ -459,4 +524,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       renderAll();
     }
   });
+
+  const applyBtn = document.getElementById("apply-ai-portfolio");
+  if (applyBtn) applyBtn.addEventListener("click", applyAiPortfolio);
 });

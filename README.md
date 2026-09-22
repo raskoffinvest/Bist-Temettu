@@ -44,6 +44,11 @@ altında yerel JSON fetch'ine izin vermez) — bir HTTP sunucusu üzerinden aç�
   güncel fiyatı elle girin; güncel fiyat hedefe indiğinde panelde "ALIM
   SİNYALİ" rozeti belirir (push/email bildirimi değildir, panel açıkken
   görünür).
+- **AI Portföy Önerisi:** Claude API, tarama kriterlerini geçen ("Uygun"
+  statülü) hisselerden sektör bazında çeşitlendirilmiş bir örnek portföy kurar
+  ve her hisse için somut sayılara dayanan bir gerekçe yazar. "Bu Portföyü
+  Uygula" butonuyla tek tıkla kendi portföyünüze aktarabilirsiniz (mevcut
+  portföyünüzün üzerine yazar, onay ister).
 
 ## Veri hakkında önemli not
 
@@ -66,13 +71,14 @@ zamanlı BIST verisi veya IBKR üzerinden fiyat alarmı kurulamıyor — panel
 web aramasıyla çekilen anlık görüntülere ve manuel girilen hedef fiyatlara
 dayanıyor.
 
-## Fiyat/destek-direnç verisinin otomatik güncellenmesi
+## Fiyat/destek-direnç ve AI portföy önerisinin otomatik güncellenmesi
 
-`js/price-data.json`, `scripts/refresh-price-data.mjs` scripti tarafından
-Claude API'nin sunucu taraflı `web_search` aracı kullanılarak yenilenir. Bu
-script `.github/workflows/refresh-price-data.yml` ile **her Pazartesi otomatik
-olarak** çalışır ve değişiklik varsa doğrudan `main`/varsayılan branch'e commit
-atar.
+`js/price-data.json` ve `js/ai-portfolio.json`, sırasıyla
+`scripts/refresh-price-data.mjs` ve `scripts/generate-ai-portfolio.mjs`
+scriptleri tarafından Claude API kullanılarak yenilenir. Her iki script de
+`.github/workflows/refresh-price-data.yml` ile **her Pazartesi otomatik
+olarak** (art arda) çalışır ve değişiklik varsa doğrudan `main`/varsayılan
+branch'e commit atar.
 
 **Kurulum (bir kere yapılır):**
 
@@ -83,7 +89,7 @@ atar.
    branch'te** (genelde `main`) çalışır — bu yüzden otomatik haftalık
    güncelleme, bu değişiklikler varsayılan branch'e alındıktan sonra devreye
    girer. O ana kadar, veya istediğiniz zaman, **Actions** sekmesinden
-   "Fiyat/Destek-Direnç Verisini Yenile" workflow'unu **Run workflow**
+   "Fiyat ve AI Portföy Önerisini Yenile" workflow'unu **Run workflow**
    butonuyla elle de tetikleyebilirsiniz (`workflow_dispatch`).
 
 **Elle/lokal çalıştırma:**
@@ -91,13 +97,20 @@ atar.
 ```bash
 npm install
 ANTHROPIC_API_KEY=sk-ant-... npm run refresh-data
+ANTHROPIC_API_KEY=sk-ant-... npm run generate-ai-portfolio
 ```
 
-Script her hisse için ayrı bir web araması yapar (~27 istek, `claude-sonnet-5`
-ile), destek/direnç seviyelerinin güncel fiyatla tutarlı olup olmadığını
-otomatik kontrol eder (tutarsızsa null bırakır) ve bir hissede arama
-başarısız olursa o hissenin **önceki değerini korur** — geçici bir hata
-yüzünden elimizdeki en güncel veriyi kaybetmez.
+`refresh-data`, her hisse için ayrı bir web araması yapar (~27 istek,
+`claude-sonnet-5` ile), destek/direnç seviyelerinin güncel fiyatla tutarlı
+olup olmadığını otomatik kontrol eder (tutarsızsa null bırakır) ve bir
+hissede arama başarısız olursa o hissenin **önceki değerini korur** — geçici
+bir hata yüzünden elimizdeki en güncel veriyi kaybetmez.
+
+`generate-ai-portfolio`, `js/data.js`'teki STOCKS + CRITERIA verisini
+(`claude-opus-5` ile, yapılandırılmış çıktı kullanarak) tek bir istekte
+işler; tarama kriterlerini geçen hisselerden sektör bazında çeşitlendirilmiş
+bir örnek portföy kurar ve her hisse için somut sayılara dayanan bir gerekçe
+üretir.
 
 ## Stratejinin dayandığı kriterler
 
@@ -146,7 +159,9 @@ index.html                              Ana sayfa
 css/style.css                            Görünüm
 js/data.js                               Hisse havuzu (elle küratörlü) + kriter sabitleri
 js/price-data.json                       Fiyat/destek-direnç (otomatik yenilenir)
-js/app.js                                Tablo/portföy/grafik mantığı, ikisini birleştirir
+js/ai-portfolio.json                     AI portföy önerisi + gerekçeler (otomatik yenilenir)
+js/app.js                                Tablo/portföy/grafik mantığı, üçünü birleştirir
 scripts/refresh-price-data.mjs           price-data.json'ı Claude API + web_search ile yeniler
-.github/workflows/refresh-price-data.yml Haftalık otomatik yenileme workflow'u
+scripts/generate-ai-portfolio.mjs        ai-portfolio.json'ı Claude API ile üretir
+.github/workflows/refresh-price-data.yml Haftalık otomatik yenileme workflow'u (her iki script)
 ```
