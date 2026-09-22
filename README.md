@@ -18,7 +18,7 @@ altında yerel JSON fetch'ine izin vermez) — bir HTTP sunucusu üzerinden aç�
 ## Özellikler
 
 - **Tarama kriterleri:** Temettü verimi %4-7 bandı, payout oranı ≤%80, düşük
-  borç/özkaynak, en az 5 yıllık kesintisiz temettü geçmişi, makul F/K ve PD/DD
+  borç/özkaynak, en az 4 yıllık kesintisiz temettü geçmişi, makul F/K ve PD/DD
   (aşırı düşük ikisi birlikte "value trap" sinyali olarak işaretlenir), açık ve
   tutarlı temettü politikası.
 - **Hisse havuzu tablosu:** Bankacılık, holding, enerji/petrokimya, telekom,
@@ -107,7 +107,7 @@ yüzünden elimizdeki en güncel veriyi kaybetmez.
   genelde fiyat düşüşünün sonucudur ve sürdürülebilir olmayabilir.
 - Payout oranı %80'i geçmemeli — geçen oranlar risk taşır, kâr düşünce
   temettü kesilir.
-- Temettü geçmişi kesintisiz/artan olmalı, tercihen 5-10 yıllık geçmiş.
+- Temettü geçmişi kesintisiz/artan olmalı, en az 4 yıl (tercihen 5-10 yıl).
 - FAVÖK ve serbest nakit akışı kâr kalitesinin göstergesidir (muhasebesel kâr
   değil, gerçek nakit üretimi temettüyü besler).
 - Borç/özkaynak oranı düşük olmalı — yüksek borçlu şirket kriz döneminde

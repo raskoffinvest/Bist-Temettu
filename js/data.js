@@ -175,7 +175,7 @@ const CRITERIA = {
   yieldMax: 7,
   payoutMax: 80,
   debtToEquityMax: 1.0,
-  dividendYearsMin: 5,
+  dividendYearsMin: 4,
   minStocks: 8,
   maxStocks: 15,
   minSectors: 3,
