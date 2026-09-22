@@ -164,6 +164,9 @@ const STOCKS = [
   { symbol: "TURSG", name: "Türkiye Sigorta", sector: "Sigorta", yieldPct: 2.44, payoutPct: 15.36, debtToEquity: null, dividendYears: 4, peRatio: null, pbRatio: null, cyclical: false, policyConsistent: true, note: "",
     geoRisk: "Sigortacılık faaliyeti makroekonomik istikrara ve doğal afet/iklim risklerine duyarlı olsa da doğrudan jeopolitik maruziyeti sınırlıdır.",
     manipRisk: "Türkiye Varlık Fonu kontrolündeki yüksek ortaklık payı halka açık payların görece sınırlı kalmasına neden olur." },
+  { symbol: "TRGYO", name: "Torunlar GYO", sector: "GYO", yieldPct: 6.76, payoutPct: 64.68, debtToEquity: 0.28, dividendYears: 4, peRatio: null, pbRatio: null, cyclical: true, policyConsistent: true, note: "Temettü geçmişi kriterin (5 yıl) 1 yıl altında kalıyor (2023'te başladı); diğer tüm ölçütleri geçiyor ve trend yükseliyor (2024: %5.49 verim → 2025: %6.76). GYO statüsü nedeniyle stopaj yok.",
+    geoRisk: "Ticari/konut gayrimenkul projelerine bağlı olduğundan faiz oranı ortamına ve inşaat sektörü döngüsüne duyarlı; doğrudan jeopolitik etkisi sınırlı.",
+    manipRisk: "Torun Grubu'nun yüksek kontrol oranı halka açık payları sınırlı kılabilir; GYO'lar proje bazlı düzensiz temettü dağıtımına eğilimlidir." },
 ];
 
 /** Portföy önerisi kriterleri (özet konuşmadan). */

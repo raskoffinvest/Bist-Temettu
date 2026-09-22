@@ -259,5 +259,6 @@
   "MAVI": { "currentPrice": 38.42, "priceAsOfDate": "2026-09-22", "support1": 37.58, "support2": null, "resistance1": 40.10, "resistance2": 40.70, "sourceUrl": "https://atayatirim.com.tr/hisse/mavi" },
   "SARKY": { "currentPrice": 22.24, "priceAsOfDate": "2026-09-22", "support1": null, "support2": null, "resistance1": null, "resistance2": null, "sourceUrl": null },
   "TABGD": { "currentPrice": 225.2, "priceAsOfDate": "2026-09-22", "support1": null, "support2": null, "resistance1": null, "resistance2": null, "sourceUrl": null },
-  "TURSG": { "currentPrice": 6.16, "priceAsOfDate": "2026-09-22", "support1": null, "support2": null, "resistance1": null, "resistance2": null, "sourceUrl": null }
+  "TURSG": { "currentPrice": 6.16, "priceAsOfDate": "2026-09-22", "support1": null, "support2": null, "resistance1": null, "resistance2": null, "sourceUrl": null },
+  "TRGYO": { "currentPrice": 94.0, "priceAsOfDate": "2026-09-22", "support1": null, "support2": null, "resistance1": 110.4, "resistance2": null, "sourceUrl": "https://finans.mynet.com/borsa/hisseler/trgyo-torunlar-gmyo/" }
 }
