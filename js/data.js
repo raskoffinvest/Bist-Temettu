@@ -1,10 +1,13 @@
 /**
  * BIST temettü aday hisse havuzu.
- * NOT: yieldPct/payoutPct/debtToEquity/peRatio/pbRatio değerleri ÖRNEK/YER TUTUCU'dur.
+ * NOT: Bazı hisselerin yieldPct/payoutPct/debtToEquity/peRatio/pbRatio/dividendYears
+ * değerleri web araştırmasıyla doğrulanmış GERÇEK verilerdir (bkz. ilgili "note"
+ * alanı — kaynak çelişkileri varsa orada açıklanmıştır). Henüz araştırılmamış
+ * hisselerde bu alanlar hâlâ ÖRNEK/YER TUTUCU olabilir — "note" alanında böyle bir
+ * uyarı yoksa temkinli olun ve KAP/güncel finansal tablolarla teyit edin.
  * geoRisk/manipRisk notları genel/yapısal değerlendirmelerdir (halka açıklık oranı,
  * sektör/ortaklık yapısı gibi), belirli bir manipülasyon iddiası içermez.
- * Gerçek portföy kararları için mutlaka güncel finansal tablolar ve KAP verileriyle
- * teyit edin. Bu panel yatırım tavsiyesi değildir.
+ * Bu panel yatırım tavsiyesi değildir.
  *
  * Güncel fiyat/destek/direnç verileri BURADA DEĞİL, js/price-data.json içinde
  * tutulur — o dosya scripts/refresh-price-data.mjs ile (haftalık GitHub Actions
@@ -17,7 +20,7 @@
  */
 const STOCKS = [
   // Bankacılık (döngüsel)
-  { symbol: "ISCTR", name: "İş Bankası (C)", sector: "Bankacılık", yieldPct: 6.0, payoutPct: 25, debtToEquity: 0.9, dividendYears: 6, peRatio: 4.5, pbRatio: 1.0, cyclical: true, policyConsistent: true, note: "Kâr payı politikası düzenli değil, yıldan yıla değişebilir",
+  { symbol: "ISCTR", name: "İş Bankası (C)", sector: "Bankacılık", yieldPct: 3.18, payoutPct: 16.54, debtToEquity: null, dividendYears: 6, peRatio: 7.0, pbRatio: 0.96, cyclical: true, policyConsistent: true, note: "2019-2020 döneminde temettü kesintisi yaşadı, 2021'den beri kesintisiz (6. yıl). Banka olduğu için klasik borç/özkaynak oranı anlamlı değil, null bırakıldı. Verim %3.18 ile hedef bandın (%4-7) altında kalıyor.",
     geoRisk: "Türkiye risk primi (CDS) ve ABD/AB yaptırım gündemine duyarlı; makro şoklarda banka hisseleri ilk tepki veren grup olur.",
     manipRisk: "Görece yüksek halka açıklık ve kurumsal yatırımcı takibi manipülasyon riskini azaltır, ama piyasa geneli oynaklığına tabi." },
   { symbol: "GARAN", name: "Garanti BBVA", sector: "Bankacılık", yieldPct: 4.5, payoutPct: 20, debtToEquity: 0.9, dividendYears: 4, peRatio: 5.0, pbRatio: 1.3, cyclical: true, policyConsistent: true, note: "",
@@ -37,7 +40,7 @@ const STOCKS = [
     manipRisk: "Kamu kontrolü nedeniyle yönetim kararları siyasi etkiye açık olabilir." },
 
   // Holding (karma, ağırlıklı döngüsel)
-  { symbol: "KCHOL", name: "Koç Holding", sector: "Holding", yieldPct: 4.2, payoutPct: 35, debtToEquity: 0.6, dividendYears: 10, peRatio: 8.0, pbRatio: 1.5, cyclical: true, policyConsistent: true, note: "Geniş sektör çeşitliliği (enerji, otomotiv, dayanıklı tüketim)",
+  { symbol: "KCHOL", name: "Koç Holding", sector: "Holding", yieldPct: 3.18, payoutPct: 78.70, debtToEquity: 3.33, dividendYears: 16, peRatio: 14.42, pbRatio: 0.69, cyclical: true, policyConsistent: true, note: "2010'dan beri kesintisiz temettü (16 yıl). Borç/özkaynak (3.33) çok yüksek görünüyor ama konsolide banka iştiraki (Yapı Kredi) dahil edildiği için — bankalar doğası gereği yüksek kaldıraçlı çalışır, bu oran holding'in kendi sanayi/ticaret kolları için yanıltıcı olabilir; yine de kriter aynı şekilde uygulandı. Verim %3.18 ile bandın altında kalıyor.",
     geoRisk: "Enerji (Tüpraş, Aygaz) ve otomotiv (Ford Otosan, Tofaş) kolları üzerinden küresel emtia fiyatları ve AB ticaret ilişkilerine dolaylı maruziyet.",
     manipRisk: "Yüksek piyasa değeri, geniş halka açıklık ve kurumsal takip nedeniyle manipülasyon riski düşük." },
   { symbol: "SAHOL", name: "Sabancı Holding", sector: "Holding", yieldPct: 4.0, payoutPct: 30, debtToEquity: 0.6, dividendYears: 10, peRatio: 7.0, pbRatio: 1.2, cyclical: true, policyConsistent: true, note: "",
@@ -48,7 +51,7 @@ const STOCKS = [
     manipRisk: "Diğer büyük holdinglere kıyasla daha düşük piyasa değeri ve halka açıklık, fiyat hareketlerini daha oynak hale getirebilir — özellikle işlem hacminin düştüğü dönemlerde dikkatli olunmalı." },
 
   // Enerji / Petrokimya (döngüsel)
-  { symbol: "TUPRS", name: "Tüpraş", sector: "Enerji/Petrokimya", yieldPct: 6.5, payoutPct: 60, debtToEquity: 0.8, dividendYears: 8, peRatio: 6.5, pbRatio: 1.8, cyclical: true, policyConsistent: true, note: "Rafineri marjlarına duyarlı, döngüsel",
+  { symbol: "TUPRS", name: "Tüpraş", sector: "Enerji/Petrokimya", yieldPct: 6.24, payoutPct: 52.63, debtToEquity: null, dividendYears: 4, peRatio: 10.61, pbRatio: 2.51, cyclical: true, policyConsistent: true, note: "2020-2022 döneminde (zayıf rafineri marjları) temettü dağıtmadı, 2023'ten beri kesintisiz (4. yıl). Payout oranında kaynaklar çelişti (%52.63 ile %882-1038 arası anormal rakamlar) — düşük dönem net kârına karşı yüksek nakit temettü ihtimaline dikkat, %52.63 temsili kabul edildi ama gerçek oran daha yüksek olabilir. Borç/özkaynak için güvenilir bilanço verisi bulunamadı, null bırakıldı.",
     geoRisk: "Ham petrol tedariki ve rafineri marjları küresel jeopolitik olaylara (Orta Doğu, Rusya-Ukrayna, OPEC+ kararları) doğrudan bağlı; olası yaptırım/ambargo gündemleri fiyatı ani etkileyebilir.",
     manipRisk: "Yüksek işlem hacmi ve kurumsal yatırımcı ağırlığı riski azaltır, ama küresel haber akışına aşırı duyarlı ani sert hareketler görülebilir." },
   { symbol: "PETKM", name: "Petkim", sector: "Enerji/Petrokimya", yieldPct: 2.5, payoutPct: 40, debtToEquity: 0.7, dividendYears: 3, peRatio: 12.0, pbRatio: 1.0, cyclical: true, policyConsistent: false, note: "Marj baskısı dönemlerinde temettü düşebilir",
@@ -59,7 +62,7 @@ const STOCKS = [
   { symbol: "TTKOM", name: "Türk Telekom", sector: "Telekom", yieldPct: 6.0, payoutPct: 70, debtToEquity: 1.1, dividendYears: 5, peRatio: 9.0, pbRatio: 2.5, cyclical: false, policyConsistent: true, note: "Yüksek borç yükü izlenmeli",
     geoRisk: "BTK düzenlemeleri ve devlet/kamu hissedarlık yapısı nedeniyle siyasi/düzenleyici karar risklerine duyarlı.",
     manipRisk: "Büyük piyasa değeri ve kurumsal takip nedeniyle düşük-orta risk." },
-  { symbol: "TCELL", name: "Turkcell", sector: "Telekom", yieldPct: 5.0, payoutPct: 50, debtToEquity: 0.7, dividendYears: 9, peRatio: 8.5, pbRatio: 2.0, cyclical: false, policyConsistent: true, note: "Görece istikrarlı nakit akışı",
+  { symbol: "TCELL", name: "Turkcell", sector: "Telekom", yieldPct: 4.30, payoutPct: 49.50, debtToEquity: 0.17, dividendYears: 10, peRatio: 13.43, pbRatio: 0.92, cyclical: false, policyConsistent: true, note: "2010-2015 arası temettü dağıtmadı, 2016'dan beri kesintisiz (10. yıl). Görece istikrarlı nakit akışı, düşük borç/özkaynak (0.17, net borç bazında).",
     geoRisk: "BTK düzenlemelerine duyarlı; doğrudan jeopolitik etkisi sınırlı, görece savunma karakterli.",
     manipRisk: "Yüksek halka açıklık ve ADR (NYSE) çift kotasyonu şeffaflığı artırır, manipülasyon riski düşük." },
 
@@ -89,7 +92,7 @@ const STOCKS = [
   { symbol: "FROTO", name: "Ford Otosan", sector: "Sanayi/Otomotiv", yieldPct: 3.5, payoutPct: 40, debtToEquity: 0.6, dividendYears: 9, peRatio: 7.0, pbRatio: 3.0, cyclical: true, policyConsistent: true, note: "İhracat ağırlıklı, kur avantajı",
     geoRisk: "AB pazarına ihracat ağırlıklı; AB gümrük/ticaret politikaları, tedarik zinciri şokları (yarı iletken, enerji) ve olası ticaret savaşlarına duyarlı.",
     manipRisk: "Ford ortaklığı ve yüksek kurumsal takip, manipülasyon riskini azaltır." },
-  { symbol: "TOASO", name: "Tofaş", sector: "Sanayi/Otomotiv", yieldPct: 4.0, payoutPct: 45, debtToEquity: 0.6, dividendYears: 8, peRatio: 7.5, pbRatio: 2.8, cyclical: true, policyConsistent: true, note: "",
+  { symbol: "TOASO", name: "Tofaş", sector: "Sanayi/Otomotiv", yieldPct: 5.96, payoutPct: 98.89, debtToEquity: 0.82, dividendYears: 21, peRatio: 12.06, pbRatio: 2.53, cyclical: true, policyConsistent: true, note: "Payout oranı %98.89 ile %80 sınırını ciddi şekilde aşıyor — kâr düşerse temettü kesme riski yüksek. Temettü geçmişi (21 yıl, 2005'ten beri) orta güvenle tahmin edildi, kaynaklar 9-21 yıl arasında çelişti.",
     geoRisk: "Stellantis (Fiat) ortaklığı üzerinden AB pazarı ve küresel otomotiv tedarik zinciri risklerine maruz.",
     manipRisk: "Koç Holding ve Stellantis ortaklığı, kurumsal yönetim şeffaflığını destekler." },
   { symbol: "ARCLK", name: "Arçelik", sector: "Sanayi/Otomotiv", yieldPct: 2.5, payoutPct: 30, debtToEquity: 0.9, dividendYears: 7, peRatio: 12.0, pbRatio: 1.4, cyclical: true, policyConsistent: true, note: "Beyaz eşya, Avrupa talebine duyarlı",
@@ -100,7 +103,7 @@ const STOCKS = [
   { symbol: "AGESA", name: "AgeSA Hayat ve Emeklilik", sector: "Sigorta", yieldPct: 5.0, payoutPct: 50, debtToEquity: 0.3, dividendYears: 5, peRatio: 10.0, pbRatio: 4.0, cyclical: false, policyConsistent: true, note: "",
     geoRisk: "Faiz oranı politikası ve BES teşviklerine duyarlı; doğrudan jeopolitik etkisi sınırlı, savunma karakterli.",
     manipRisk: "Görece düşük işlem hacmi, likidite düştüğünde ani fiyat hareketleri görülebilir." },
-  { symbol: "ANHYT", name: "Anadolu Hayat Emeklilik", sector: "Sigorta", yieldPct: 4.5, payoutPct: 45, debtToEquity: 0.3, dividendYears: 6, peRatio: 9.0, pbRatio: 3.5, cyclical: false, policyConsistent: true, note: "",
+  { symbol: "ANHYT", name: "Anadolu Hayat Emeklilik", sector: "Sigorta", yieldPct: 8.34, payoutPct: null, debtToEquity: null, dividendYears: 14, peRatio: null, pbRatio: null, cyclical: false, policyConsistent: true, note: "2012'den beri kesintisiz temettü (14 yıl) — güçlü bir geçmiş, ama TTM verim %8.34 ile hedef bandın (%4-7) üzerinde, bu da sürdürülebilirlik açısından bir uyarı işareti. Payout/borç-özkaynak/F-K/PD-DD için güvenilir sayısal veri bulunamadı, null bırakıldı.",
     geoRisk: "Faiz oranı politikası ve BES teşviklerine duyarlı; doğrudan jeopolitik etkisi sınırlı.",
     manipRisk: "İş Bankası/Anadolu Grubu ortaklık yapısı görece şeffaf, ama işlem hacmi düşük olabilir." },
 
@@ -108,7 +111,7 @@ const STOCKS = [
   { symbol: "AKCNS", name: "Akçansa", sector: "Çimento", yieldPct: 5.5, payoutPct: 55, debtToEquity: 0.5, dividendYears: 6, peRatio: 8.0, pbRatio: 1.6, cyclical: true, policyConsistent: true, note: "İnşaat sektörü döngüsüne duyarlı",
     geoRisk: "İhracat pazarları (Afrika, ABD) ve enerji (kömür/elektrik) maliyetleri küresel emtia şoklarına duyarlı.",
     manipRisk: "Sabancı/Heidelberg ortaklığı kurumsal yönetimi destekler, ama işlem hacmi görece düşük olabilir." },
-  { symbol: "CIMSA", name: "Çimsa", sector: "Çimento", yieldPct: 4.0, payoutPct: 40, debtToEquity: 0.6, dividendYears: 5, peRatio: 9.0, pbRatio: 1.5, cyclical: true, policyConsistent: true, note: "",
+  { symbol: "CIMSA", name: "Çimsa", sector: "Çimento", yieldPct: 1.55, payoutPct: 16.42, debtToEquity: 0.67, dividendYears: 26, peRatio: 14.62, pbRatio: 1.56, cyclical: true, policyConsistent: true, note: "26 yıllık uzun bir temettü geçmişi var ama verim şu an sadece %1.55 — hedef bandın (%4-7) çok altında, büyüme/yeniden yatırım odaklı bir dönemde olabilir.",
     geoRisk: "İhracat ağırlıklı (ABD, Afrika) yapı; enerji maliyetleri ve küresel inşaat talebine duyarlı.",
     manipRisk: "Sabancı Holding çatısı kurumsal yönetimi destekler." },
 
