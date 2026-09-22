@@ -1,0 +1,249 @@
+{
+  "_meta": {
+    "description": "Web aramasıyla çekilen anlık fiyat/destek-direnç görüntüsü. Canlı borsa akışı değildir. Haftalık olarak scripts/refresh-price-data.mjs tarafından (GitHub Actions üzerinden) güncellenir.",
+    "lastRefreshedAt": "2026-09-22T11:09:56.566Z"
+  },
+  "ISCTR": {
+    "currentPrice": 13.9,
+    "priceAsOfDate": "2026-09-21",
+    "support1": 13.63,
+    "support2": 13.09,
+    "resistance1": 14.18,
+    "resistance2": 14.58,
+    "sourceUrl": "https://uzmanpara.milliyet.com.tr/hisse/teknik-analiz/ISCTR/"
+  },
+  "GARAN": {
+    "currentPrice": 133.5,
+    "priceAsOfDate": "2026-09-21",
+    "support1": 121.67,
+    "support2": 114.33,
+    "resistance1": 134.67,
+    "resistance2": 140.33,
+    "sourceUrl": "https://tr.tradingview.com/symbols/BIST-GARAN/technicals/"
+  },
+  "AKBNK": {
+    "currentPrice": 68.75,
+    "priceAsOfDate": "2026-09-21",
+    "support1": 67.08,
+    "support2": 66,
+    "resistance1": 71.08,
+    "resistance2": 72,
+    "sourceUrl": "https://borsaverileri.com/bist-akbnk-akbank-hisse-teknik-analiz-son-durum.html"
+  },
+  "YKBNK": {
+    "currentPrice": 34,
+    "priceAsOfDate": "2026-09-21",
+    "support1": 33.28,
+    "support2": 32.7,
+    "resistance1": 34.8,
+    "resistance2": 35.9,
+    "sourceUrl": "https://tr.tradingview.com/symbols/BIST-YKBNK/technicals/"
+  },
+  "HALKB": {
+    "currentPrice": 46.52,
+    "priceAsOfDate": "2026-09-21",
+    "support1": 44.15,
+    "support2": 43.05,
+    "resistance1": 46.75,
+    "resistance2": 48.25,
+    "sourceUrl": "https://www.borsametre.com.tr/teknik-analizler/halkb-ve-banka-endeksinde-one-cikan-destek-ve-direnc-seviyeleri-138087h"
+  },
+  "VAKBN": {
+    "currentPrice": 31.42,
+    "priceAsOfDate": "2026-09-21",
+    "support1": 31.07,
+    "support2": null,
+    "resistance1": 33.35,
+    "resistance2": null,
+    "sourceUrl": "https://borsaverileri.com/bist-vakbn-vakiflarbankasi-hisse-teknik-analiz-son-durum.html"
+  },
+  "KCHOL": {
+    "currentPrice": 222.3,
+    "priceAsOfDate": "2026-09-21",
+    "support1": 203,
+    "support2": 197,
+    "resistance1": 229.9,
+    "resistance2": null,
+    "sourceUrl": "https://atayatirim.com.tr/hisse/kchol"
+  },
+  "SAHOL": {
+    "currentPrice": 89.6,
+    "priceAsOfDate": "2026-09-21",
+    "support1": 87,
+    "support2": 83.55,
+    "resistance1": 94.95,
+    "resistance2": 99,
+    "sourceUrl": "https://atayatirim.com.tr/hisse/sahol"
+  },
+  "DOHOL": {
+    "currentPrice": 21.56,
+    "priceAsOfDate": "2026-09-21",
+    "support1": 20.77,
+    "support2": null,
+    "resistance1": 21.89,
+    "resistance2": null,
+    "sourceUrl": "https://borsaverileri.com/bist-dohol-doganholding-hisse-teknik-analiz-son-durum.html"
+  },
+  "TUPRS": {
+    "currentPrice": 410,
+    "priceAsOfDate": "2026-09-21",
+    "support1": 406.33,
+    "support2": 395.67,
+    "resistance1": 422.33,
+    "resistance2": 427.67,
+    "sourceUrl": "https://www.borsametre.com.tr/teknik-analizler/tuprs-hisse-analizi-iste-guncel-destek-ve-direnc-seviyeleri-138079h"
+  },
+  "PETKM": {
+    "currentPrice": 20.1,
+    "priceAsOfDate": "2026-09-21",
+    "support1": 19,
+    "support2": null,
+    "resistance1": 20.76,
+    "resistance2": 21.1,
+    "sourceUrl": "https://www.borsametre.com.tr/teknik-analizler/petkm-hisselerinde-teknik-seviyeler-neler-138113h"
+  },
+  "TTKOM": {
+    "currentPrice": 49.84,
+    "priceAsOfDate": "2026-09-21",
+    "support1": 48.33,
+    "support2": 44.67,
+    "resistance1": 56.33,
+    "resistance2": 60.67,
+    "sourceUrl": "https://finans.mynet.com/haber/detay/borsa/turk-telekom-ttkom-21-eylul-pazartesi-2026-gunluk-teknik-analiz/575798/"
+  },
+  "TCELL": {
+    "currentPrice": 113.4,
+    "priceAsOfDate": "2026-09-21",
+    "support1": 111.2,
+    "support2": 106,
+    "resistance1": 129.6,
+    "resistance2": 138,
+    "sourceUrl": "https://www.hisse.net/borsa/hisseler/tcell-turkcell"
+  },
+  "EKGYO": {
+    "currentPrice": 20.06,
+    "priceAsOfDate": "2026-09-21",
+    "support1": 19.02,
+    "support2": null,
+    "resistance1": 20.1,
+    "resistance2": null,
+    "sourceUrl": "https://www.gcmyatirim.com.tr/borsa/hisse/ekgyo-hisse-emlak-konut-gayrimenkul-yatirim-ortakligi-a-s"
+  },
+  "ISGYO": {
+    "currentPrice": 23.4,
+    "priceAsOfDate": "2026-09-21",
+    "support1": 21.82,
+    "support2": 21.5,
+    "resistance1": 23.98,
+    "resistance2": null,
+    "sourceUrl": "https://www.getmidas.com/canli-borsa/isgyo-hisse/"
+  },
+  "HLGYO": {
+    "currentPrice": 4.92,
+    "priceAsOfDate": "2026-09-21",
+    "support1": 4.56,
+    "support2": 4.46,
+    "resistance1": 6.2,
+    "resistance2": 6.61,
+    "sourceUrl": "https://finans.cnnturk.com/borsa/teknik-analiz/HLGYO"
+  },
+  "ULKER": {
+    "currentPrice": 112.6,
+    "priceAsOfDate": "2026-09-21",
+    "support1": 101.2,
+    "support2": 98.7,
+    "resistance1": 115,
+    "resistance2": null,
+    "sourceUrl": "https://finans.mynet.com/haber/detay/borsa/ulker-biskuvi-ulker-21-eylul-pazartesi-2026-gunluk-teknik-analiz/575833/"
+  },
+  "CCOLA": {
+    "currentPrice": 85.8,
+    "priceAsOfDate": "2026-09-21",
+    "support1": 83.15,
+    "support2": null,
+    "resistance1": 87.1,
+    "resistance2": null,
+    "sourceUrl": "https://www.gcmyatirim.com.tr/borsa/hisse/ccola-hisse-coca-cola-icecek-a-s"
+  },
+  "BANVT": {
+    "currentPrice": 164.1,
+    "priceAsOfDate": "2026-09-21",
+    "support1": 157.2,
+    "support2": 150.4,
+    "resistance1": 177.5,
+    "resistance2": 182.2,
+    "sourceUrl": "https://ekofin.net/sirket/detay/BANVT/teknik"
+  },
+  "FROTO": {
+    "currentPrice": 90,
+    "priceAsOfDate": "2026-09-07",
+    "support1": 84.85,
+    "support2": 81,
+    "resistance1": 100,
+    "resistance2": 110,
+    "sourceUrl": "https://www.habergo.com.tr/haber/bist-te-kritik-seviyeler-asels-tcell-froto-ve-ekgyo-icin-7-eylul-teknik-gorunum"
+  },
+  "TOASO": {
+    "currentPrice": 317,
+    "priceAsOfDate": "2026-09-21",
+    "support1": null,
+    "support2": null,
+    "resistance1": null,
+    "resistance2": null,
+    "sourceUrl": "https://www.borsametre.com.tr/piyasalar/toasoda-hacimli-yukselis-direnc-ve-destek-noktalari-138200h"
+  },
+  "ARCLK": {
+    "currentPrice": 115.2,
+    "priceAsOfDate": "2026-09-21",
+    "support1": 113.33,
+    "support2": 108.67,
+    "resistance1": null,
+    "resistance2": null,
+    "sourceUrl": "https://www.borsaverileri.com/bist-arclk-arcelik-hisse-teknik-analiz-son-durum.html"
+  },
+  "AGESA": {
+    "currentPrice": 232.2,
+    "priceAsOfDate": "2026-09-21",
+    "support1": null,
+    "support2": null,
+    "resistance1": null,
+    "resistance2": null,
+    "sourceUrl": "https://tr.tradingview.com/symbols/BIST-AGESA/technicals/"
+  },
+  "ANHYT": {
+    "currentPrice": 105.6,
+    "priceAsOfDate": "2026-09-21",
+    "support1": null,
+    "support2": null,
+    "resistance1": 112.73,
+    "resistance2": 122.93,
+    "sourceUrl": "https://tr.tradingview.com/symbols/BIST-ANHYT/technicals/"
+  },
+  "AKCNS": {
+    "currentPrice": 133.8,
+    "priceAsOfDate": "2026-09-21",
+    "support1": 133.2,
+    "support2": 122.3,
+    "resistance1": 139.5,
+    "resistance2": 146.4,
+    "sourceUrl": "https://atayatirim.com.tr/hisse/akcns"
+  },
+  "CIMSA": {
+    "currentPrice": 48.54,
+    "priceAsOfDate": "2026-09-21",
+    "support1": null,
+    "support2": null,
+    "resistance1": null,
+    "resistance2": null,
+    "sourceUrl": "https://finans.mynet.com/haber/detay/borsa/cimsa-cimsa-21-eylul-pazartesi-2026-gunluk-teknik-analiz/575866/"
+  },
+  "THYAO": {
+    "currentPrice": 293.5,
+    "priceAsOfDate": "2026-09-22",
+    "support1": 279.67,
+    "support2": 266.33,
+    "resistance1": 299.67,
+    "resistance2": 306.33,
+    "sourceUrl": "https://finans.mynet.com/haber/detay/borsa/turk-hava-yollari-thyao-22-eylul-sali-2026-gunluk-teknik-analiz/576125/"
+  }
+}

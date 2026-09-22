@@ -1,0 +1,13 @@
+{
+  "name": "bist-temettu",
+  "version": "1.0.0",
+  "private": true,
+  "description": "BIST Temettü Portföy Paneli — statik dashboard + fiyat/destek-direnç verisini yenileyen script",
+  "scripts": {
+    "refresh-data": "node scripts/refresh-price-data.mjs",
+    "serve": "python3 -m http.server 8000"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.127.0"
+  }
+}

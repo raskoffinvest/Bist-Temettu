@@ -7,11 +7,13 @@ web panel. Build aracı gerektirmez; tarayıcıda doğrudan çalışır.
 
 ```bash
 python3 -m http.server 8000
+# veya: npm run serve
 ```
 
-sonra `http://localhost:8000` adresini açın. (Doğrudan `index.html` dosyasını
-`file://` ile açmak da çoğu tarayıcıda çalışır çünkü veriler `js/data.js`
-içine gömülüdür, ayrı bir `fetch` gerektirmez.)
+sonra `http://localhost:8000` adresini açın. Panel açılırken `js/price-data.json`
+dosyasını `fetch` ile okur; bu yüzden `index.html`'i doğrudan `file://` ile
+açmak fiyat/destek-direnç sütunlarını boş bırakır (tarayıcılar `file://`
+altında yerel JSON fetch'ine izin vermez) — bir HTTP sunucusu üzerinden açın.
 
 ## Özellikler
 
@@ -46,10 +48,11 @@ içine gömülüdür, ayrı bir `fetch` gerektirmez.)
 ## Veri hakkında önemli not
 
 `js/data.js` içindeki temettü verimi/payout/borç-özkaynak/F-K/PD-DD değerleri
-**örnek/yer tutucu**dur. `currentPrice`/`support`/`resistance` alanları web
-aramasıyla çekilmiş **anlık görüntülerdir** (`priceAsOfDate` tarihli, canlı
-borsa akışı değildir) — bazı kaynaklarda güncel fiyatla tutarsız görünen
-destek/direnç seviyeleri (ör. TOASO, CIMSA) bilinçli olarak boş bırakıldı.
+**örnek/yer tutucu**dur ve elle güncellenmelidir. `js/price-data.json`
+içindeki `currentPrice`/`support`/`resistance` alanları web aramasıyla
+çekilmiş **anlık görüntülerdir** (`priceAsOfDate` tarihli, canlı borsa akışı
+değildir) — bazı kaynaklarda güncel fiyatla tutarsız görünen destek/direnç
+seviyeleri (ör. TOASO, CIMSA) bilinçli olarak boş bırakıldı.
 `geoRisk`/`manipRisk` notları genel, yapısal değerlendirmelerdir (halka
 açıklık oranı, ortaklık yapısı gibi), belirli bir olay/manipülasyon iddiası
 içermez. Gerçek portföy kararları vermeden önce bu değerleri güncel finansal
@@ -62,6 +65,39 @@ erişim bulunmuyor (sadece tahvil/ADR sonuçları dönüyor). Bu yüzden gerçek
 zamanlı BIST verisi veya IBKR üzerinden fiyat alarmı kurulamıyor — panel
 web aramasıyla çekilen anlık görüntülere ve manuel girilen hedef fiyatlara
 dayanıyor.
+
+## Fiyat/destek-direnç verisinin otomatik güncellenmesi
+
+`js/price-data.json`, `scripts/refresh-price-data.mjs` scripti tarafından
+Claude API'nin sunucu taraflı `web_search` aracı kullanılarak yenilenir. Bu
+script `.github/workflows/refresh-price-data.yml` ile **her Pazartesi otomatik
+olarak** çalışır ve değişiklik varsa doğrudan `main`/varsayılan branch'e commit
+atar.
+
+**Kurulum (bir kere yapılır):**
+
+1. Bir Anthropic API anahtarı alın (https://console.anthropic.com).
+2. Repo ayarlarında **Settings → Secrets and variables → Actions** altına
+   `ANTHROPIC_API_KEY` adında bir secret ekleyin.
+3. Bu workflow `schedule` tetikleyicisi GitHub'da yalnızca **varsayılan
+   branch'te** (genelde `main`) çalışır — bu yüzden otomatik haftalık
+   güncelleme, bu değişiklikler varsayılan branch'e alındıktan sonra devreye
+   girer. O ana kadar, veya istediğiniz zaman, **Actions** sekmesinden
+   "Fiyat/Destek-Direnç Verisini Yenile" workflow'unu **Run workflow**
+   butonuyla elle de tetikleyebilirsiniz (`workflow_dispatch`).
+
+**Elle/lokal çalıştırma:**
+
+```bash
+npm install
+ANTHROPIC_API_KEY=sk-ant-... npm run refresh-data
+```
+
+Script her hisse için ayrı bir web araması yapar (~27 istek, `claude-sonnet-5`
+ile), destek/direnç seviyelerinin güncel fiyatla tutarlı olup olmadığını
+otomatik kontrol eder (tutarsızsa null bırakır) ve bir hissede arama
+başarısız olursa o hissenin **önceki değerini korur** — geçici bir hata
+yüzünden elimizdeki en güncel veriyi kaybetmez.
 
 ## Stratejinin dayandığı kriterler
 
@@ -106,8 +142,11 @@ dayanıyor.
 ## Dosya yapısı
 
 ```
-index.html        Ana sayfa
-css/style.css      Görünüm
-js/data.js         Hisse havuzu + kriter sabitleri
-js/app.js          Tablo/portföy/grafik mantığı
+index.html                              Ana sayfa
+css/style.css                            Görünüm
+js/data.js                               Hisse havuzu (elle küratörlü) + kriter sabitleri
+js/price-data.json                       Fiyat/destek-direnç (otomatik yenilenir)
+js/app.js                                Tablo/portföy/grafik mantığı, ikisini birleştirir
+scripts/refresh-price-data.mjs           price-data.json'ı Claude API + web_search ile yeniler
+.github/workflows/refresh-price-data.yml Haftalık otomatik yenileme workflow'u
 ```

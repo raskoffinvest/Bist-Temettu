@@ -406,9 +406,32 @@ function renderAll() {
   renderWarnings();
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+async function loadPriceData() {
+  try {
+    const res = await fetch("js/price-data.json");
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const priceData = await res.json();
+    STOCKS.forEach((s) => {
+      const p = priceData[s.symbol];
+      if (p) Object.assign(s, p);
+    });
+    if (priceData._meta && priceData._meta.lastRefreshedAt) {
+      const el = document.getElementById("price-refresh-note");
+      if (el) {
+        const d = new Date(priceData._meta.lastRefreshedAt);
+        el.textContent = `Fiyat/destek-direnç verisi en son ${d.toLocaleDateString("tr-TR")} tarihinde web aramasıyla güncellendi.`;
+      }
+    }
+  } catch (e) {
+    // js/price-data.json bulunamadı/okunamadı (ör. file:// ile açıldı) —
+    // tablo fiyat sütunları "–" olarak kalır, panelin geri kalanı çalışmaya devam eder.
+  }
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
   renderCriteria();
   renderSectorFilterOptions();
+  await loadPriceData();
   renderAll();
 
   document.getElementById("sector-filter").addEventListener("change", (e) => {
