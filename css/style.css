@@ -200,6 +200,11 @@ a.price-date:hover {
   color: var(--text);
   border: 1px solid var(--muted);
 }
+.badge-incomplete {
+  background: var(--panel);
+  color: var(--warn);
+  border: 1px dashed var(--warn);
+}
 
 tr.status-risk td.symbol-cell .symbol {
   color: var(--risk);

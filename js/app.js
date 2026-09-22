@@ -58,6 +58,15 @@ function stockStatus(stock) {
   if (!stock.policyConsistent) {
     reasons.push("Temettü politikası açık/tutarlı değil");
   }
+  const coreFields = ["yieldPct", "payoutPct", "debtToEquity", "dividendYears"];
+  const missingCore = coreFields.filter((f) => !isNum(stock[f]));
+
+  if (reasons.length === 0 && missingCore.length > 0) {
+    return {
+      level: "incomplete",
+      reasons: [`Kriterlerin tamamı için karar verilemiyor — şu alanlarda güvenilir veri bulunamadı: ${missingCore.join(", ")}. Bulunan diğer değerler kriterleri geçiyor, ama bu "Uygun" anlamına gelmez.`],
+    };
+  }
   if (reasons.length === 0) return { level: "ok", reasons };
   if (reasons.length <= 1) return { level: "warn", reasons };
   return { level: "risk", reasons };
@@ -67,6 +76,7 @@ function statusLabel(level) {
   if (level === "ok") return "Uygun";
   if (level === "warn") return "Dikkat";
   if (level === "unverified") return "Doğrulanmamış";
+  if (level === "incomplete") return "Eksik Veri";
   return "Riskli";
 }
 
@@ -106,6 +116,7 @@ function renderCriteria() {
     <li>Tek sektör ağırlığı <strong>%${CRITERIA.maxSectorWeightPct}</strong>'i aşmamalı</li>
     <li>Stopaj: doğrudan hisse yerine hisse ağırlıklı fonlar (örn. PHE/KHA/PBR) bazı yatırımcılar için %0 stopaj avantajı sunabilir</li>
     <li><strong>"Doğrulanmamış" rozeti:</strong> o hissenin verim/payout/borç-özkaynak/F-K/PD-DD verileri henüz web araştırmasıyla teyit edilmedi, örnek/yer tutucu olabilir — bu hisseler "Uygun" sayılmaz, hangi hisselerin gerçek veriyle doğrulandığını görmek için ⓘ notlarına bakın</li>
+    <li><strong>"Eksik Veri" rozeti:</strong> hisse araştırıldı (gerçek veri var) ama bazı kritik alanlar (verim, payout, borç/özkaynak veya temettü geçmişi) güvenilir bir kaynakta bulunamadı — bulunan değerler kriterleri geçse bile bu "Uygun" sayılmaz, çünkü tam bir değerlendirme yapılamadı</li>
   `;
 }
 
@@ -409,7 +420,7 @@ function renderWarnings() {
     });
     items.forEach((x) => {
       const status = stockStatus(x.stock);
-      if (status.level === "risk" || status.level === "unverified") {
+      if (status.level === "risk" || status.level === "unverified" || status.level === "incomplete") {
         warnings.push(`${x.stock.symbol}: ${status.reasons.join("; ")}`);
       }
     });
