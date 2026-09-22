@@ -31,21 +31,25 @@ function savePortfolio() {
   }
 }
 
+function isNum(v) {
+  return typeof v === "number" && !Number.isNaN(v);
+}
+
 function stockStatus(stock) {
   const reasons = [];
-  if (stock.yieldPct < CRITERIA.yieldMin || stock.yieldPct > CRITERIA.yieldMax) {
+  if (isNum(stock.yieldPct) && (stock.yieldPct < CRITERIA.yieldMin || stock.yieldPct > CRITERIA.yieldMax)) {
     reasons.push(`Verim aralık dışı (${stock.yieldPct}%)`);
   }
-  if (stock.payoutPct > CRITERIA.payoutMax) {
+  if (isNum(stock.payoutPct) && stock.payoutPct > CRITERIA.payoutMax) {
     reasons.push(`Payout oranı yüksek (${stock.payoutPct}%)`);
   }
-  if (stock.debtToEquity > CRITERIA.debtToEquityMax) {
+  if (isNum(stock.debtToEquity) && stock.debtToEquity > CRITERIA.debtToEquityMax) {
     reasons.push(`Borç/özkaynak yüksek (${stock.debtToEquity})`);
   }
-  if (stock.dividendYears < CRITERIA.dividendYearsMin) {
+  if (isNum(stock.dividendYears) && stock.dividendYears < CRITERIA.dividendYearsMin) {
     reasons.push(`Temettü geçmişi kısa (${stock.dividendYears} yıl)`);
   }
-  if (stock.peRatio < CRITERIA.valueTrapPE && stock.pbRatio < CRITERIA.valueTrapPB) {
+  if (isNum(stock.peRatio) && isNum(stock.pbRatio) && stock.peRatio < CRITERIA.valueTrapPE && stock.pbRatio < CRITERIA.valueTrapPB) {
     reasons.push(`Düşük F/K (${stock.peRatio}) + düşük PD/DD (${stock.pbRatio}) — olası value trap, nedenini araştırın`);
   }
   if (!stock.policyConsistent) {
@@ -57,7 +61,11 @@ function stockStatus(stock) {
 }
 
 function formatPct(n) {
-  return `${n.toFixed(1)}%`;
+  return isNum(n) ? `${n.toFixed(1)}%` : "–";
+}
+
+function formatNum(n) {
+  return isNum(n) ? n : "–";
 }
 
 function formatPrice(n) {
@@ -132,11 +140,11 @@ function renderStockTable() {
         <td>${s.sector}</td>
         <td>${formatPct(s.yieldPct)}</td>
         <td>${formatPct(s.payoutPct)}</td>
-        <td>${s.debtToEquity}</td>
-        <td>${s.peRatio}</td>
-        <td>${s.pbRatio}</td>
+        <td>${formatNum(s.debtToEquity)}</td>
+        <td>${formatNum(s.peRatio)}</td>
+        <td>${formatNum(s.pbRatio)}</td>
         <td><span class="badge badge-${s.cyclical ? "cyclical" : "defensive"}">${s.cyclical ? "Döngüsel" : "Savunma"}</span></td>
-        <td>${s.dividendYears} yıl</td>
+        <td>${isNum(s.dividendYears) ? `${s.dividendYears} yıl` : "–"}</td>
         <td>${priceLine}</td>
         <td>${srLine}</td>
         <td><span class="badge badge-${status.level}" title="${status.reasons.join("; ") || "Kriterlere uygun"}">${status.level === "ok" ? "Uygun" : status.level === "warn" ? "Dikkat" : "Riskli"}</span></td>
@@ -253,13 +261,19 @@ function portfolioStocks() {
     .filter((x) => x.stock);
 }
 
+function weightedAvg(items, field) {
+  const known = items.filter((x) => isNum(x.stock[field]));
+  const knownWeight = known.reduce((a, x) => a + x.weight, 0);
+  if (!knownWeight) return null;
+  return known.reduce((a, x) => a + x.stock[field] * x.weight, 0) / knownWeight;
+}
+
 function renderSummary() {
   const items = portfolioStocks();
-  const totalWeight = items.reduce((a, x) => a + x.weight, 0) || 1;
 
-  const weightedYield = items.reduce((a, x) => a + x.stock.yieldPct * x.weight, 0) / totalWeight;
-  const weightedPayout = items.reduce((a, x) => a + x.stock.payoutPct * x.weight, 0) / totalWeight;
-  const weightedDebt = items.reduce((a, x) => a + x.stock.debtToEquity * x.weight, 0) / totalWeight;
+  const weightedYield = weightedAvg(items, "yieldPct");
+  const weightedPayout = weightedAvg(items, "payoutPct");
+  const weightedDebt = weightedAvg(items, "debtToEquity");
   const sectorCount = new Set(items.map((x) => x.stock.sector)).size;
   const signalCount = Object.values(portfolio).filter(
     (p) => p.targetPrice != null && p.currentPrice != null && p.currentPrice <= p.targetPrice
@@ -284,7 +298,7 @@ function renderSummary() {
     </div>
     <div class="card">
       <div class="card-label">Ağırlıklı Borç/Özkaynak</div>
-      <div class="card-value">${items.length ? weightedDebt.toFixed(2) : "–"}</div>
+      <div class="card-value">${isNum(weightedDebt) ? weightedDebt.toFixed(2) : "–"}</div>
     </div>
     <div class="card ${signalCount > 0 ? "card-signal" : ""}">
       <div class="card-label">Alım Sinyali</div>

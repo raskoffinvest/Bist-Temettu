@@ -1,11 +1,11 @@
 {
   "_meta": {
-    "description": "Web aramasıyla çekilen anlık fiyat/destek-direnç görüntüsü. Canlı borsa akışı değildir. Haftalık olarak scripts/refresh-price-data.mjs tarafından (GitHub Actions üzerinden) güncellenir.",
-    "lastRefreshedAt": "2026-09-22T11:09:56.566Z"
+    "description": "Web aramasıyla ve kullanıcı tarafından paylaşılan güncel XTM25 fiyat tablosuyla güncellenen fiyat/destek-direnç görüntüsü. Canlı borsa akışı değildir. Haftalık olarak scripts/refresh-price-data.mjs tarafından (GitHub Actions üzerinden) güncellenir.",
+    "lastRefreshedAt": "2026-09-22T00:00:00Z"
   },
   "ISCTR": {
-    "currentPrice": 13.9,
-    "priceAsOfDate": "2026-09-21",
+    "currentPrice": 13.74,
+    "priceAsOfDate": "2026-09-22",
     "support1": 13.63,
     "support2": 13.09,
     "resistance1": 14.18,
@@ -13,8 +13,8 @@
     "sourceUrl": "https://uzmanpara.milliyet.com.tr/hisse/teknik-analiz/ISCTR/"
   },
   "GARAN": {
-    "currentPrice": 133.5,
-    "priceAsOfDate": "2026-09-21",
+    "currentPrice": 135.4,
+    "priceAsOfDate": "2026-09-22",
     "support1": 121.67,
     "support2": 114.33,
     "resistance1": 134.67,
@@ -22,8 +22,8 @@
     "sourceUrl": "https://tr.tradingview.com/symbols/BIST-GARAN/technicals/"
   },
   "AKBNK": {
-    "currentPrice": 68.75,
-    "priceAsOfDate": "2026-09-21",
+    "currentPrice": 74.1,
+    "priceAsOfDate": "2026-09-22",
     "support1": 67.08,
     "support2": 66,
     "resistance1": 71.08,
@@ -58,8 +58,8 @@
     "sourceUrl": "https://borsaverileri.com/bist-vakbn-vakiflarbankasi-hisse-teknik-analiz-son-durum.html"
   },
   "KCHOL": {
-    "currentPrice": 222.3,
-    "priceAsOfDate": "2026-09-21",
+    "currentPrice": 222.6,
+    "priceAsOfDate": "2026-09-22",
     "support1": 203,
     "support2": 197,
     "resistance1": 229.9,
@@ -85,12 +85,12 @@
     "sourceUrl": "https://borsaverileri.com/bist-dohol-doganholding-hisse-teknik-analiz-son-durum.html"
   },
   "TUPRS": {
-    "currentPrice": 410,
-    "priceAsOfDate": "2026-09-21",
-    "support1": 406.33,
-    "support2": 395.67,
-    "resistance1": 422.33,
-    "resistance2": 427.67,
+    "currentPrice": 390.75,
+    "priceAsOfDate": "2026-09-22",
+    "support1": null,
+    "support2": null,
+    "resistance1": null,
+    "resistance2": null,
     "sourceUrl": "https://www.borsametre.com.tr/teknik-analizler/tuprs-hisse-analizi-iste-guncel-destek-ve-direnc-seviyeleri-138079h"
   },
   "PETKM": {
@@ -112,10 +112,10 @@
     "sourceUrl": "https://finans.mynet.com/haber/detay/borsa/turk-telekom-ttkom-21-eylul-pazartesi-2026-gunluk-teknik-analiz/575798/"
   },
   "TCELL": {
-    "currentPrice": 113.4,
-    "priceAsOfDate": "2026-09-21",
-    "support1": 111.2,
-    "support2": 106,
+    "currentPrice": 101.6,
+    "priceAsOfDate": "2026-09-22",
+    "support1": null,
+    "support2": null,
     "resistance1": 129.6,
     "resistance2": 138,
     "sourceUrl": "https://www.hisse.net/borsa/hisseler/tcell-turkcell"
@@ -157,9 +157,9 @@
     "sourceUrl": "https://finans.mynet.com/haber/detay/borsa/ulker-biskuvi-ulker-21-eylul-pazartesi-2026-gunluk-teknik-analiz/575833/"
   },
   "CCOLA": {
-    "currentPrice": 85.8,
-    "priceAsOfDate": "2026-09-21",
-    "support1": 83.15,
+    "currentPrice": 78.8,
+    "priceAsOfDate": "2026-09-22",
+    "support1": null,
     "support2": null,
     "resistance1": 87.1,
     "resistance2": null,
@@ -175,17 +175,17 @@
     "sourceUrl": "https://ekofin.net/sirket/detay/BANVT/teknik"
   },
   "FROTO": {
-    "currentPrice": 90,
-    "priceAsOfDate": "2026-09-07",
-    "support1": 84.85,
-    "support2": 81,
+    "currentPrice": 80.1,
+    "priceAsOfDate": "2026-09-22",
+    "support1": null,
+    "support2": null,
     "resistance1": 100,
     "resistance2": 110,
     "sourceUrl": "https://www.habergo.com.tr/haber/bist-te-kritik-seviyeler-asels-tcell-froto-ve-ekgyo-icin-7-eylul-teknik-gorunum"
   },
   "TOASO": {
-    "currentPrice": 317,
-    "priceAsOfDate": "2026-09-21",
+    "currentPrice": 290.5,
+    "priceAsOfDate": "2026-09-22",
     "support1": null,
     "support2": null,
     "resistance1": null,
@@ -211,8 +211,8 @@
     "sourceUrl": "https://tr.tradingview.com/symbols/BIST-AGESA/technicals/"
   },
   "ANHYT": {
-    "currentPrice": 105.6,
-    "priceAsOfDate": "2026-09-21",
+    "currentPrice": 103,
+    "priceAsOfDate": "2026-09-22",
     "support1": null,
     "support2": null,
     "resistance1": 112.73,
@@ -229,8 +229,8 @@
     "sourceUrl": "https://atayatirim.com.tr/hisse/akcns"
   },
   "CIMSA": {
-    "currentPrice": 48.54,
-    "priceAsOfDate": "2026-09-21",
+    "currentPrice": 42.94,
+    "priceAsOfDate": "2026-09-22",
     "support1": null,
     "support2": null,
     "resistance1": null,
@@ -245,5 +245,19 @@
     "resistance1": 299.67,
     "resistance2": 306.33,
     "sourceUrl": "https://finans.mynet.com/haber/detay/borsa/turk-hava-yollari-thyao-22-eylul-sali-2026-gunluk-teknik-analiz/576125/"
-  }
+  },
+  "AEFES": { "currentPrice": 19.04, "priceAsOfDate": "2026-09-22", "support1": null, "support2": null, "resistance1": null, "resistance2": null, "sourceUrl": null },
+  "AGHOL": { "currentPrice": 34.32, "priceAsOfDate": "2026-09-22", "support1": null, "support2": null, "resistance1": null, "resistance2": null, "sourceUrl": null },
+  "AKSA": { "currentPrice": 10.91, "priceAsOfDate": "2026-09-22", "support1": null, "support2": null, "resistance1": null, "resistance2": null, "sourceUrl": null },
+  "BIMAS": { "currentPrice": 433.25, "priceAsOfDate": "2026-09-22", "support1": null, "support2": null, "resistance1": null, "resistance2": null, "sourceUrl": null },
+  "BRYAT": { "currentPrice": 1556, "priceAsOfDate": "2026-09-22", "support1": null, "support2": null, "resistance1": null, "resistance2": null, "sourceUrl": null },
+  "DOAS": { "currentPrice": 158.6, "priceAsOfDate": "2026-09-22", "support1": null, "support2": null, "resistance1": null, "resistance2": null, "sourceUrl": null },
+  "ECILC": { "currentPrice": 61.9, "priceAsOfDate": "2026-09-22", "support1": null, "support2": null, "resistance1": null, "resistance2": null, "sourceUrl": null },
+  "ENKAI": { "currentPrice": 87.2, "priceAsOfDate": "2026-09-22", "support1": null, "support2": null, "resistance1": null, "resistance2": null, "sourceUrl": null },
+  "EREGL": { "currentPrice": 37.84, "priceAsOfDate": "2026-09-22", "support1": null, "support2": null, "resistance1": null, "resistance2": null, "sourceUrl": null },
+  "ISMEN": { "currentPrice": 33.9, "priceAsOfDate": "2026-09-22", "support1": null, "support2": null, "resistance1": null, "resistance2": null, "sourceUrl": null },
+  "MAVI": { "currentPrice": 38.42, "priceAsOfDate": "2026-09-22", "support1": null, "support2": null, "resistance1": null, "resistance2": null, "sourceUrl": null },
+  "SARKY": { "currentPrice": 22.24, "priceAsOfDate": "2026-09-22", "support1": null, "support2": null, "resistance1": null, "resistance2": null, "sourceUrl": null },
+  "TABGD": { "currentPrice": 225.2, "priceAsOfDate": "2026-09-22", "support1": null, "support2": null, "resistance1": null, "resistance2": null, "sourceUrl": null },
+  "TURSG": { "currentPrice": 6.16, "priceAsOfDate": "2026-09-22", "support1": null, "support2": null, "resistance1": null, "resistance2": null, "sourceUrl": null }
 }
