@@ -160,6 +160,8 @@ th[data-sort]:hover {
 .badge-ok { background: var(--ok); }
 .badge-warn { background: var(--warn); }
 .badge-risk { background: var(--risk); }
+.badge-cyclical { background: var(--muted); }
+.badge-defensive { background: var(--accent); }
 
 tr.status-risk td.symbol-cell .symbol {
   color: var(--risk);

@@ -16,11 +16,14 @@ içine gömülüdür, ayrı bir `fetch` gerektirmez.)
 ## Özellikler
 
 - **Tarama kriterleri:** Temettü verimi %4-7 bandı, payout oranı ≤%80, düşük
-  borç/özkaynak, en az 5 yıllık kesintisiz temettü geçmişi.
+  borç/özkaynak, en az 5 yıllık kesintisiz temettü geçmişi, makul F/K ve PD/DD
+  (aşırı düşük ikisi birlikte "value trap" sinyali olarak işaretlenir), açık ve
+  tutarlı temettü politikası.
 - **Hisse havuzu tablosu:** Bankacılık, holding, enerji/petrokimya, telekom,
-  GYO, gıda/tüketim, sanayi/otomotiv, sigorta ve çimento sektörlerinden örnek
-  hisseler; sektöre göre filtreleme, sütuna göre sıralama, kritere uygunluk
-  durumu (Uygun / Dikkat / Riskli).
+  GYO, gıda/tüketim, sanayi/otomotiv, sigorta, çimento ve ulaştırma
+  sektörlerinden örnek hisseler; sektöre göre filtreleme, sütuna göre
+  sıralama, döngüsel/savunma sektör etiketi, kritere uygunluk durumu
+  (Uygun / Dikkat / Riskli).
 - **Portföy oluşturucu:** Havuzdan hisse ekleyip ağırlık (%) belirleyerek
   hipotetik bir portföy kurun. Seçimler tarayıcının `localStorage`'ında saklanır.
 - **Özet kartları:** Hisse/sektör sayısı, ağırlıklı temettü verimi, ağırlıklı
@@ -41,20 +44,35 @@ değildir.
 
 ## Stratejinin dayandığı kriterler
 
-- Temettü verimi %4-7 bandı sağlıklı kabul edilir (çok yüksek verim risk
-  sinyali olabilir).
-- Payout oranı %80'i geçmemeli.
+- Temettü verimi %4-7 bandı sağlıklı kabul edilir; çok yüksek verim (%10+)
+  genelde fiyat düşüşünün sonucudur ve sürdürülebilir olmayabilir.
+- Payout oranı %80'i geçmemeli — geçen oranlar risk taşır, kâr düşünce
+  temettü kesilir.
 - Temettü geçmişi kesintisiz/artan olmalı, tercihen 5-10 yıllık geçmiş.
-- FAVÖK ve serbest nakit akışı kâr kalitesinin göstergesidir.
-- Borç/özkaynak oranı düşük olmalı.
+- FAVÖK ve serbest nakit akışı kâr kalitesinin göstergesidir (muhasebesel kâr
+  değil, gerçek nakit üretimi temettüyü besler).
+- Borç/özkaynak oranı düşük olmalı — yüksek borçlu şirket kriz döneminde
+  temettüyü ilk kesen olur.
+- F/K ve PD/DD makul seviyede olmalı; aşırı ucuz olması "value trap" sinyali
+  olabilir.
+- Sektörün döngüsel olmayan, savunma karakterli olması tercih edilebilir
+  (gıda, ilaç, temel tüketim, telekom gibi).
+- Yönetim/ortaklık yapısında temettü politikasının açık ve tutarlı olması
+  gerekir (bazı holdingler kâr olsa da dağıtmıyor).
 
 **BIST'e özgü riskler:**
 
-- Enflasyon muhasebesi (TFRS/UMS 29) raporlanan kârları etkiliyor.
-- TL bazlı temettünün kur riski (nominal vs. reel getiri farkı).
-- Stopaj: hisse ağırlıklı fonlarda (PHE/KHA/PBR gibi) %0 stopaj avantajı
-  olabiliyor.
-- Sektör yoğunlaşmasından kaçınmak gerekiyor.
+- Enflasyon muhasebesi: 2024'ten beri TFRS/UMS 29 enflasyon düzeltmesi
+  uygulanıyor — raporlanan kârları ve temettü kapasitesini önemli ölçüde
+  etkiliyor, şirket bazında enflasyon düzeltmeli tablolar kontrol edilmeli.
+- TL bazlı temettünün kur riski: TL'nin değer kaybıyla dolar bazında erimiş
+  olabilir, nominal ile reel getiri farkı büyük olabilir.
+- Stopaj: hisse temettülerinde stopaj var; hisse ağırlıklı fonlarda
+  (PHE/KHA/PBR gibi) %0 stopaj avantajı olabiliyor — bazı yatırımcılar için
+  doğrudan hisse yerine fon üzerinden gitmek daha avantajlı olabilir.
+- Sektör yoğunlaşması: BIST'te bankalar ve holding şirketleri ağırlıklı — tek
+  sektöre aşırı yüklenmemek (banka, sanayi, GYO, enerji arasında dağıtmak)
+  önemli.
 
 **Portföy önerisi:**
 

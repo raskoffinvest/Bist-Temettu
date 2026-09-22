@@ -38,6 +38,12 @@ function stockStatus(stock) {
   if (stock.dividendYears < CRITERIA.dividendYearsMin) {
     reasons.push(`Temettü geçmişi kısa (${stock.dividendYears} yıl)`);
   }
+  if (stock.peRatio < CRITERIA.valueTrapPE && stock.pbRatio < CRITERIA.valueTrapPB) {
+    reasons.push(`Düşük F/K (${stock.peRatio}) + düşük PD/DD (${stock.pbRatio}) — olası value trap, nedenini araştırın`);
+  }
+  if (!stock.policyConsistent) {
+    reasons.push("Temettü politikası açık/tutarlı değil");
+  }
   if (reasons.length === 0) return { level: "ok", reasons };
   if (reasons.length <= 1) return { level: "warn", reasons };
   return { level: "risk", reasons };
@@ -54,8 +60,14 @@ function renderCriteria() {
     <li>Payout oranı <strong>%${CRITERIA.payoutMax}</strong>'i geçmemeli</li>
     <li>Borç/özkaynak oranı düşük olmalı (referans eşik: <strong>${CRITERIA.debtToEquityMax}</strong>)</li>
     <li>Temettü geçmişi kesintisiz/artan, en az <strong>${CRITERIA.dividendYearsMin} yıl</strong></li>
+    <li>F/K ve PD/DD makul seviyede olmalı — çok düşük F/K (&lt;${CRITERIA.valueTrapPE}) + çok düşük PD/DD (&lt;${CRITERIA.valueTrapPB}) birlikte <strong>value trap</strong> sinyali olabilir</li>
+    <li>Temettü politikası yönetim/ortaklık yapısında açık ve tutarlı uygulanmalı (bazı holdingler kâr olsa da dağıtmıyor)</li>
+    <li>Savunma karakterli, döngüsel olmayan sektörler (gıda, telekom, sigorta gibi) tercih edilebilir; döngüsel sektörlerde pay sınırlı tutulmalı</li>
+    <li>Enflasyon muhasebesi (TFRS/UMS 29) raporlanan kârı ve temettü kapasitesini etkiliyor — şirket bazında enflasyon düzeltmeli tabloları kontrol edin</li>
+    <li>TL bazlı temettünün kur riski var — nominal ve reel/dolar bazlı getiri farkına dikkat edin</li>
     <li>Portföyde <strong>${CRITERIA.minStocks}-${CRITERIA.maxStocks}</strong> hisse, en az <strong>${CRITERIA.minSectors}</strong> farklı sektör</li>
     <li>Tek sektör ağırlığı <strong>%${CRITERIA.maxSectorWeightPct}</strong>'i aşmamalı</li>
+    <li>Stopaj: doğrudan hisse yerine hisse ağırlıklı fonlar (örn. PHE/KHA/PBR) bazı yatırımcılar için %0 stopaj avantajı sunabilir</li>
   `;
 }
 
@@ -92,6 +104,9 @@ function renderStockTable() {
         <td>${formatPct(s.yieldPct)}</td>
         <td>${formatPct(s.payoutPct)}</td>
         <td>${s.debtToEquity}</td>
+        <td>${s.peRatio}</td>
+        <td>${s.pbRatio}</td>
+        <td><span class="badge badge-${s.cyclical ? "cyclical" : "defensive"}">${s.cyclical ? "Döngüsel" : "Savunma"}</span></td>
         <td>${s.dividendYears} yıl</td>
         <td><span class="badge badge-${status.level}" title="${status.reasons.join("; ") || "Kriterlere uygun"}">${status.level === "ok" ? "Uygun" : status.level === "warn" ? "Dikkat" : "Riskli"}</span></td>
         <td>
